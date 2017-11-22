@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400&subset=latin-ext');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato', sans-serif;
+}
+
+/* Menu */
+nav#mainNav {
+    background: transparent;
+    padding: 15px;
+}
+
+.mainNav-heading {
+    font-size: 20px;
+    color: #fefefe;
+    font-weight: 300;
+    font-family: 'Lato', sans-serif;
+}
+
+.mainNav-heading:hover {
+    color: #fefefe!important;
+    opacity: 0.7;
+}
+
+.mainNav-heading blue {
+    color: #60b3ff;
+}
+
+.mainNav-links li a {
+    font-size: 14px;
+    color:#fefefe;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-family: 'Lato', sans-serif;
+}
+
+.mainNav-links li a:hover {
+    background: transparent!important;
+    opacity: 0.3;
+}
+
+/* Cover */
+section#cover {
+    margin-top: -110px;
+    height: 590px;
+    min-height: 100vh;
+    background: #3c4982; /* Old browsers */
+    background: -moz-linear-gradient(top, #3c4982 0%, #2e8dc2 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #3c4982 0%,#2e8dc2 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #3c4982 0%,#2e8dc2 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3c4982', endColorstr='#2e8dc2',GradientType=0 );
+    text-align: center;
+    border-bottom: 1px solid #d5d5d5;
+}
+
+.cover-fix {
+  height: auto!important;
+  padding-bottom: 60px;
+}
+
+.cover-text {
+    color: #fefefe;
+    font-family: 'Lato', sans-serif;
+    font-size: 28px;
+    font-weight: 300!important;
+    text-align: center;
+    margin-top: 200px;
+    margin-bottom: 30px;
+}
+
+.cover-button {
+    display: inline-block;
+    margin: 0 auto!important;
+    padding: 15px 45px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fefefe;
+    font-size: 16px;
+    border: 1px solid #fefefe;
+    transition: 0.8s;
+}
+
+.cover-button:hover {
+    text-decoration: none;
+    background:#fefefe;
+    cursor: pointer;
+    color: #3c4982;
+}
+
+.cover-logo{
+  height: 150px;
+  width: 150px;
+}
+
+.cover-header{
+  font-weight: 300;
+}
+
+.cover-scroll{
+  font-size: 12px;
+  width: 100%;
+  color: #fefefe;
+  text-align: center;
+  position: absolute;
+  text-transform: uppercase;
+  top: 90vh;
+}
+
+.cover-scroll blue{
+  color: #3c4982;
+}
+
+.scroll-icon{
+  height: 25px;
+  width: 25px;
+}
+
+/* About */
+section#about {
+  padding: 60px 0;
+}
+
+.about-heading {
+  text-align: center;
+  color:#2e8dc2;
+  font-size: 24px;
+  line-height: 32px;
+  text-transform: uppercase;
+}
+
+.about-paragraph {
+  display: block;
+  font-size: 14px;
+  color: #5d5d5d;
+  text-align: center;
+  line-height: 24px;
+}
+
+/* Footer */
+section#footer {
+  padding: 60px 0;
+  border-top: 1px solid #d5d5d5;
+}
+
+.footer-right {
+  float: right;
+}
+
+.footer-right a {
+  margin-left: 30px;
+}
+
+/* Login form */
+.login-form {
+  margin-top: 30px;
+  text-align: left!important;
+}
+
+.login-form lable {
+  font-size: 18px!important;
+  font-weight: 300;
+  text-align: left;
+  color: #fefefe;
+  margin-bottom: 15px;
+  display: block;
+}
+
+ .login-form__input {
+  padding: 25px!important;
+}
+
+.login-button {
+  width: 100%;
+  background: transparent;
+}
+
+.login-screen {
+  text-align: center;
+  margin-top: 100px;
+}
