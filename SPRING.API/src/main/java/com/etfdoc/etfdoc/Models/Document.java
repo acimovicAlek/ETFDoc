@@ -1,32 +1,32 @@
 package com.etfdoc.etfdoc.Models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
-public class Folder implements Serializable{
+public class Document implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = Account.class)
-    private Account owner;
+    private  Account owner;
     private Boolean privateFlag = false;
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = Folder.class)
-    private Folder parentFolder;
+    private Folder folder;
+    @DateTimeFormat
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Date date;
 
-    public Folder(String name, Account owner, Boolean private_flag, Folder parentFolder) {
+    public Document(String name, Account owner, Boolean private_flag, Folder folder) {
         this.name = name;
         this.owner = owner;
         this.privateFlag = private_flag;
-        this.parentFolder = parentFolder;
-    }
-
-    public Folder(String name, Account owner, Boolean private_flag) {
-        this.name = name;
-        this.owner = owner;
-        this.privateFlag = private_flag;
+        this.folder = folder;
     }
 
     public Long getId() {
@@ -61,12 +61,19 @@ public class Folder implements Serializable{
         this.privateFlag = private_flag;
     }
 
-    public Folder getParentFolder() {
-        return parentFolder;
+    public Folder getFolder() {
+        return folder;
     }
 
-    public void setParentFolder(Folder parent_folder) {
-        this.parentFolder = parent_folder;
+    public void setFolder(Folder folder) {
+        this.folder = folder;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 }

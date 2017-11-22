@@ -11,14 +11,25 @@ public class Account implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
+    @Column(unique = true)
     private String email;
     private String password;
     private String firstName;
     private String lastName;
-    private ROLE role;
 
-    public Account(){
+    public Account() {
+    }
 
+    @ManyToOne(targetEntity = Role.class)
+
+    private Role role;
+
+    public Account(String email, String password, String firstName, String lastName, Role role) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
     }
 
     public Long getId() {
@@ -61,8 +72,8 @@ public class Account implements Serializable {
         this.lastName = lastName;
     }
 
-    public ROLE getRole(){return role;}
+    public Role getRole(){return role;}
 
-    public void setRole(ROLE role) { this.role = role; }
+    public void setRole(Role role) { this.role = role; }
 
 }

@@ -3,6 +3,7 @@ package com.etfdoc.etfdoc.Controllers;
 import com.etfdoc.etfdoc.Models.Account;
 import com.etfdoc.etfdoc.Repositories.IAccountRepository;
 import com.etfdoc.etfdoc.Services.AccountService;
+import com.etfdoc.etfdoc.ViewModels.AccountVM;
 import jdk.nashorn.internal.parser.JSONParser;
 import org.hibernate.service.spi.ServiceException;
 import org.json.JSONObject;
@@ -117,7 +118,23 @@ public class AccountController {
             }
         }
 
-/*        @RequestMapping(value = "/get", method = RequestMethod.GET)
+        @RequestMapping(value = "/create", method = RequestMethod.POST )
+        public ResponseEntity createAccount(@RequestBody AccountVM accountVM)
+        {
+            try {
+                return ResponseEntity.status(HttpStatus.OK)
+                        .body(accountService.createAccount(accountVM, "ROLE_USER"));
+            }
+            catch (ServiceException e){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(e.getLocalizedMessage());
+            }catch (NoSuchAlgorithmException e){
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(e.getLocalizedMessage());
+            }
+        }
+
+        @RequestMapping(value = "/get", method = RequestMethod.GET)
         public ResponseEntity getAccountById(@RequestAttribute("id")Long id){
 
             try{
@@ -144,6 +161,6 @@ public class AccountController {
                         body(e.getLocalizedMessage());
             }
 
-        }*/
+        }
 
 }

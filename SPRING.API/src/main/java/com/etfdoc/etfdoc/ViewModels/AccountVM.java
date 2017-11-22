@@ -1,9 +1,6 @@
 package com.etfdoc.etfdoc.ViewModels;
 
 import com.etfdoc.etfdoc.Models.Account;
-import com.etfdoc.etfdoc.Models.ROLE;
-
-import javax.management.relation.Role;
 
 public class AccountVM {
 
@@ -12,9 +9,9 @@ public class AccountVM {
     private String password;
     private String firstName;
     private String lastName;
-    private ROLE role;
+    private RoleVM role;
 
-    public AccountVM(Long id, String email, String password, String firstName, String lastName, ROLE role){
+    public AccountVM(Long id, String email, String password, String firstName, String lastName, RoleVM role){
         this.id = id;
         this.email = email;
         this.password = password;
@@ -23,7 +20,7 @@ public class AccountVM {
         this.role = role;
     }
 
-    public AccountVM(String email, String password, String firstName, String lastName, ROLE role){
+    public AccountVM(String email, String password, String firstName, String lastName, RoleVM role){
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -37,7 +34,7 @@ public class AccountVM {
         this.password = account.getPassword();
         this.firstName = account.getFirstName();
         this.lastName = account.getLastName();
-        this.role = account.getRole();
+        this.role = new RoleVM(account.getRole());
     }
 
     public Long getId() {
@@ -64,6 +61,6 @@ public class AccountVM {
         return lastName;
     }
 
-    public ROLE getRole() { return role; }
+    public RoleVM getRole() { return role; }
 
 }

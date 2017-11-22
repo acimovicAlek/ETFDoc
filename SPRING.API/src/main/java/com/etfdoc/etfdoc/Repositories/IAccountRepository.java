@@ -17,4 +17,6 @@ public interface IAccountRepository extends PagingAndSortingRepository<Account, 
 
     @Query("SELECT u FROM Account u WHERE u.email = ?1 AND u.password = ?2")
     Page<Account> findByMailAndPass(String email, String password, Pageable pageable);
+
+
 }
