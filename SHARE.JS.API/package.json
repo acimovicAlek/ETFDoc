@@ -1,0 +1,17 @@
+{
+  "name": "etfdoc-node-api",
+  "version": "1.0.0",
+  "description": "This is the default Node API for ETFDoc realtime collaboration. It is attached to rethinkDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Mirza Ohranović, Aleksandar Ačimović, Jasmina Bajramnović",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2",
+    "rethinkdb": "^2.3.3",
+    "socket.io": "^2.0.4",
+    "socket.io-client": "^2.0.4"
+  }
+}
