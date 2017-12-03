@@ -13,6 +13,8 @@ public class DocumentVM {
     private FolderVM folder;
     private Date date;
 
+    public DocumentVM(){}
+
     public DocumentVM(Long id, String name, AccountVM owner, Boolean private_flag, FolderVM folder, Date date) {
         this.id = id;
         this.name = name;

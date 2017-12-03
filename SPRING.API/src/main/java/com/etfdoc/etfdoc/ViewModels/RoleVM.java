@@ -6,6 +6,8 @@ public class RoleVM {
     private Long id;
     private String name;
 
+    public RoleVM(){}
+
     public RoleVM(Long id, String name) {
         this.id = id;
         this.name = name;
