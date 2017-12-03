@@ -4,6 +4,7 @@ import com.etfdoc.etfdoc.Models.Account;
 import com.etfdoc.etfdoc.Repositories.IAccountRepository;
 import com.etfdoc.etfdoc.Services.AccountService;
 import com.etfdoc.etfdoc.ViewModels.AccountVM;
+import com.etfdoc.etfdoc.ViewModels.RoleVM;
 import jdk.nashorn.internal.parser.JSONParser;
 import org.hibernate.service.spi.ServiceException;
 import org.json.JSONObject;
@@ -13,11 +14,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.Principal;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -34,6 +37,7 @@ public class AccountController {
         @Autowired
         IAccountRepository accountRepo;
 
+        /*
         private String encodePassword(String password, String email) {
             String authPassword = password + email + "probamosecurity";
 
@@ -65,7 +69,7 @@ public class AccountController {
             acc.setFirstName(first_name);
             acc.setLastName(last_name);
 
-            /* Generating password */
+
             String authPassword = password + email + "probamosecurity";
 
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -84,7 +88,6 @@ public class AccountController {
         @RequestMapping(path="/login", method = RequestMethod.POST)
         public @ResponseBody ResponseEntity<String> login (@RequestParam String email, @RequestParam String password) throws NoSuchAlgorithmException {
 
-            /* Generating password */
             String authPassword = password + email + "probamosecurity";
 
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -117,8 +120,9 @@ public class AccountController {
                 return new ResponseEntity<String>(returnMsg, HttpStatus.BAD_REQUEST);
             }
         }
+        */
 
-        @RequestMapping(value = "/create", method = RequestMethod.POST )
+        @RequestMapping(value = "/create", consumes = "application/json", method = RequestMethod.POST )
         public ResponseEntity createAccount(@RequestBody AccountVM accountVM)
         {
             try {
@@ -162,5 +166,40 @@ public class AccountController {
             }
 
         }
+
+    @RequestMapping(value = "/createrole", method = RequestMethod.POST )
+    public ResponseEntity createRole(@RequestBody RoleVM role)
+    {
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(accountService.addRole(role));
+        }
+        catch (ServiceException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(e.getLocalizedMessage());
+        }
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ResponseEntity update(@RequestBody AccountVM accountVM, Principal principal){
+        try{
+            if(accountService.update(accountVM, principal.getName())) {
+                return ResponseEntity.status(HttpStatus.OK).body(true);
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+        }
+        catch (ServiceException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(e.getLocalizedMessage());
+        }
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @RequestMapping(value = "/role", method = RequestMethod.GET)
+    public RoleVM getRola(Principal principal) {
+
+        return accountService.getRolaForUser(principal.getName());
+
+    }
 
 }

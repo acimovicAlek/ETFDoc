@@ -11,6 +11,8 @@ public class FolderVM {
     private Boolean privateFlag = false;
     private FolderVM parentFolder;
 
+    public FolderVM(){}
+
     public FolderVM(Long id, String name, AccountVM owner, Boolean private_flag, FolderVM parent_folder) {
         this.id = id;
         this.name = name;
