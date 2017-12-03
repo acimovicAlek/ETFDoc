@@ -154,8 +154,10 @@ section#footer {
 
 /* Login form */
 .login-form {
-  margin-top: 30px;
+  margin-top: 30px!important;
   text-align: left!important;
+  width: 75%!important;
+  margin: auto;
 }
 
 .login-form lable {
@@ -168,10 +170,22 @@ section#footer {
 }
 
  .login-form__input {
-  padding: 25px!important;
+  width: 100%;
+ 	height: 50px;
+ 	background-color: transparent;
+ 	border-style: none;
+  border-radius: 0!important;
+  box-shadow: none!important;
+  color: #fefefe;
+ 	border-bottom: 0.3px solid #fefefe!important;
+ 	text-align: center;
 }
 
+
+
 .login-button {
+  margin-top: 30px!important;
+  height: 50px!important;
   width: 100%;
   background: transparent;
 }
