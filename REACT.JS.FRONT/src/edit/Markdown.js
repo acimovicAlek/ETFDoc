@@ -1,15 +1,33 @@
 import React, { Component } from 'react';
+import { getParameterByName, currentContent } from '../_services/RealTimeAPI.js';
+import openSocket from 'socket.io-client';
+
+const socket = openSocket('http://localhost:6400');
 
 class Markdown extends Component {
 
     constructor () {
         super();
         this.state = {
-          content: '';
-          id: this.props.location.query.document,
-          user: sessionStorage.getItem('userData').id
+          content: '',
+          id: Number(getParameterByName('document')),
+          user: Number(getParameterByName('user')),
+          active: {}
         };
-    },
+
+        this.onChange = this.onChange.bind(this);
+
+        socket.on('document', (res) => {
+          if(res.new_val.id == this.state.id && res.new_val.user != this.state.user) 
+            this.setState({content: res.new_val.content});
+        });
+
+        currentContent(Number(getParameterByName('document'))).then((result) => {
+          console.log(result);
+          this.setState({content: result.content});
+        });
+    }
+
     componentWillMount() {
       // Prije nego se komponenta ucita 
       // Provjri authentikaciju
@@ -18,10 +36,18 @@ class Markdown extends Component {
       // Provjeri da li korisnik ima privliegije da uređuje ovaj dokument
       // Ako nema treba redirektati negdje, gdje god
       // Ispisati prouku da ne može pristupiti uređivanju
-    },
-    handleChange: function(event) {
-      this.setState({value: event.target.value});
-    },
+    }
+
+    onChange(e) {
+        this.setState({[e.target.name]:e.target.value});
+        var obj = {
+          content: e.target.value,
+          id: this.state.id,
+          user: this.state.user
+        };
+        socket.emit('document-update', obj);  
+    }
+
     render () {
         return (
             <section id="markdown-editor">
@@ -32,13 +58,11 @@ class Markdown extends Component {
                       <hr/>
                     <div className="markdown-editor-collaborators">
                       <ul>
-                        <li>mirza.ohranovic@etf.unsa.ba</li>
-                        <li>aleksandar.acimovic@etf.unsa.ba</li>
                       </ul>
                     </div>
                   </div>
                   <div className="col-md-8 col-md-offset-2 col-sm-12 col-xs-12">
-                    <textarea name="content" value={this.state.content} onChange={this.handleChange}></textarea>
+                    <textarea className="editor" name="content" value={this.state.content} onChangeCapture={this.onChange}></textarea>
                   </div>
                 </div>
               </div>

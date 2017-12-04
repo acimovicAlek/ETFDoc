@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-import openSocket from 'socket.io-client';
 
 import './Home.css';
 
 import Menu from './common/Menu';
-import Footer from './common/Footer';
-import HomePanel from './home/HomePanel';
+import Markdown from './edit/Markdown';
 
-const socket = openSocket('http://localhost:6400');
-
-class Home extends Component {
+class Editor extends Component {
   constructor() {
     super();
   }
@@ -17,11 +13,10 @@ class Home extends Component {
   render () {
     return (
       <div>
-        <HomePanel />
-        <Footer />
+        <Markdown />
       </div>
     );
   }
 };
 
-export default Home;
+export default Editor;
