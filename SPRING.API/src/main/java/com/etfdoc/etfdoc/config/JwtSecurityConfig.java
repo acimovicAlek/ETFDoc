@@ -25,7 +25,7 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .antMatchers("/account/createrole").hasRole("ROLE_ADMIN")
+                .antMatchers("/account/createrole").permitAll()
                 .antMatchers("/account/create").permitAll()
                 .antMatchers("/account/getbyemail").permitAll()
                 .antMatchers("/account/update").permitAll()

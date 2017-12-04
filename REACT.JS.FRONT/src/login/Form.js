@@ -19,7 +19,7 @@ class Form extends Component {
         event.preventDefault();
 
         if(this.state.email && this.state.password) {
-            PostData('account/login', this.state).then((result) => {
+            PostData('login', this.state).then((result) => {
                 let responseJson = result;
 
                 if(result) {
@@ -46,7 +46,7 @@ class Form extends Component {
                             <div className="login-form">
                                 <div className="form-group">
                                     <input type="email" className="form-control login-form__input" name="email" placeholder="E-mail" value={this.state.email} onChange={this.onChange} />
-                                
+
                                 </div>
                                 <div className="form-group">
                                     <input type="password" className="form-control login-form__input" name="password" placeholder="Password" value={this.state.password} onChange={this.onChange} />

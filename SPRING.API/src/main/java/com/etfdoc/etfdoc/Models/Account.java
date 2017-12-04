@@ -14,9 +14,7 @@ public class Account implements Serializable {
     @Column(unique = true)
     private String email;
     private String password;
-    @Column(name="first_name")
     private String firstName;
-    @Column(name="last_name")
     private String lastName;
 
     public Account() {
@@ -25,6 +23,8 @@ public class Account implements Serializable {
     @ManyToOne(targetEntity = Role.class)
 
     private Role role;
+
+
 
     public Account(String email, String password, String firstName, String lastName, Role role) {
         this.email = email;

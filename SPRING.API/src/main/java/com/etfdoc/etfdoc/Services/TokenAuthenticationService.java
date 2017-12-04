@@ -3,6 +3,7 @@ package com.etfdoc.etfdoc.Services;
 import com.etfdoc.etfdoc.Models.Account;
 import com.etfdoc.etfdoc.Repositories.IAccountRepository;
 import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

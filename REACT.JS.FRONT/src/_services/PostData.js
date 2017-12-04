@@ -24,7 +24,7 @@ export function PostData(endpoint, data) {
             reject(error);
         });
     });
-}   
+}
 
 export function GetData(endpoint, data) {
     let ROOTURL = 'http://localhost:9000/api/';

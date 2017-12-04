@@ -35,7 +35,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         res.setHeader("Access-Control-Expose-Headers", "Authorization, Role");
         if(!req.getMethod().equals("POST")) {
             creds = new AccountCredentials();
-            creds.setUsername("");
+            creds.setEmail("");
             creds.setPassword("");
         } else {
             creds = new ObjectMapper().readValue(req.getInputStream(), AccountCredentials.class);
@@ -43,7 +43,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
         return getAuthenticationManager().authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        creds.getUsername(),
+                        creds.getEmail(),
                         creds.getPassword(),
                         Collections.emptyList()
                 )
