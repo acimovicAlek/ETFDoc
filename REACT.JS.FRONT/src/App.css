@@ -194,3 +194,16 @@ section#footer {
   text-align: center;
   margin-top: 100px;
 }
+<<<<<<< HEAD
+
+.editor {
+  width: 100%;
+  min-height: 400px;
+  max-height: 1200px;
+  font-size: 18px;
+  line-height: 24px;
+  color: #5d5d5d;
+  border: 0px;
+}
+=======
+>>>>>>> master

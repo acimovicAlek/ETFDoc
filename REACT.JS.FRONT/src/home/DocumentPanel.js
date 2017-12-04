@@ -4,10 +4,7 @@ class DocumentPanel extends Component {
 
     constructor () {
         super();
-
     }
-
-
 
     render () {
         return (
