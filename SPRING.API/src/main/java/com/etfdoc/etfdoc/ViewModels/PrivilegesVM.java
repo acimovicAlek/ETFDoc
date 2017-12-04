@@ -11,6 +11,7 @@ public class PrivilegesVM {
     private Boolean write = false;
     private Boolean update = false;
 
+    public PrivilegesVM(){}
     public PrivilegesVM(Long id, AccountVM account, DocumentVM document, Boolean read, Boolean write, Boolean update) {
         this.id = id;
         this.account = account;

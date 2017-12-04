@@ -14,12 +14,12 @@ class Form extends Component {
         this.onChange = this.onChange.bind(this);
     }
 
-    //Login 
+    //Login
     login (event) {
         event.preventDefault();
-        
+
         if(this.state.email && this.state.password) {
-            PostData('account/login', this.state).then((result) => {
+            PostData('login', this.state).then((result) => {
                 let responseJson = result;
 
                 if(result) {
@@ -45,11 +45,10 @@ class Form extends Component {
                         <form action="" method="post">
                             <div className="login-form">
                                 <div className="form-group">
-                                    <lable htmlFor="email">E-mail:</lable>
                                     <input type="email" className="form-control login-form__input" name="email" placeholder="E-mail" value={this.state.email} onChange={this.onChange} />
+
                                 </div>
                                 <div className="form-group">
-                                    <lable htmlFor="password">Password:</lable>
                                     <input type="password" className="form-control login-form__input" name="password" placeholder="Password" value={this.state.password} onChange={this.onChange} />
                                 </div>
 

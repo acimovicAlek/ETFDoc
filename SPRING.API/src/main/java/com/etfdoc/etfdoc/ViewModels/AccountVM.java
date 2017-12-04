@@ -7,9 +7,20 @@ public class AccountVM {
     private Long id;
     private String email;
     private String password;
+    private String oldPassword;
     private String firstName;
     private String lastName;
     private RoleVM role;
+
+    public AccountVM(){}
+
+    public AccountVM(String email, String password, String firstName, String lastName){
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
 
     public AccountVM(Long id, String email, String password, String firstName, String lastName, RoleVM role){
         this.id = id;
@@ -20,13 +31,6 @@ public class AccountVM {
         this.role = role;
     }
 
-    public AccountVM(String email, String password, String firstName, String lastName, RoleVM role){
-        this.email = email;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.role = role;
-    }
 
     public AccountVM(Account account){
         this.id = account.getId();
@@ -63,4 +67,11 @@ public class AccountVM {
 
     public RoleVM getRole() { return role; }
 
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
 }

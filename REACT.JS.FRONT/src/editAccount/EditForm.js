@@ -13,20 +13,18 @@ class Form extends Component {
             repPassword: ''
         }
 
-        this.register = this.register.bind(this);
+        this.edit = this.edit.bind(this);
         this.onChange = this.onChange.bind(this);
     }
 
-    // Registration handler
-    register (event) {
+    edit (event) {
         event.preventDefault();
-        // E-mail regex
         let emre = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if(emre.test(this.state.email)) {
              if(this.state.password == this.state.repPassword) {
                 PostData('account/register', this.state).then((result) => {
                     if(result == "true") {
-                        alert('Successfully registred!');
+                        alert('Successfully edited account info!');
                         window.location = '/login';
                     } else
                         alert('Already exists!');
@@ -48,25 +46,26 @@ class Form extends Component {
                             <img className="cover-logo" src={require('../img/cover-logo.png')} />
                         </div>
                         <form action="" method="post">
-                            <div className="login-form">
-                                <div className="form-group">
-                                    <input type="first_name" className="form-control login-form__input" name="first_name" placeholder="First name" onChange={this.onChange}/>
-                                </div>
-                                <div className="form-group">
-                                    <input type="last_name" className="form-control login-form__input" name="last_name" placeholder="Last name" onChange={this.onChange}/>
-                                </div>
-                                <div className="form-group">
-                                    <input type="email" className="form-control login-form__input" name="email" placeholder="E-mail" onChange={this.onChange}/>
-                                </div>
-                                <div className="form-group">
-                                    <input type="password" className="form-control login-form__input" name="password" placeholder="Password" onChange={this.onChange}/>
-                                </div>
-                                <div className="form-group">
-                                    <input type="password" className="form-control login-form__input" name="repPassword" placeholder="Password" onChange={this.onChange}/>
+                            <div className="edit-form">
+                                <div className="form-group ">
+                                    <div className="edit-field">
+                                      <p className="edit-label">First name: </p>
+                                      <input type="first_name" className="form-control edit-form__input" name="first_name" placeholder="First name" onChange={this.onChange}/>
+                                    </div>
+                                    <div className="edit-field">
+                                      <p className="edit-label">Last name: </p>
+                                      <input type="last_name" className="form-control edit-form__input" name="last_name" placeholder="Last name" onChange={this.onChange}/>
+                                    </div>
+                                    <div className="edit-field">
+                                      <p className="edit-label">E-mail: </p>
+                                      <input type="email" className="form-control edit-form__input" name="email" placeholder="E-mail" onChange={this.onChange}/>
+                                    </div>
+
+
                                 </div>
 
                                 <button type="submit" className="cover-button login-button" name="register" onClick={this.register}>
-                                    Create account
+                                    Save changes
                                 </button>
                             </div>
                         </form>

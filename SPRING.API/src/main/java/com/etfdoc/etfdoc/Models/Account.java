@@ -24,6 +24,8 @@ public class Account implements Serializable {
 
     private Role role;
 
+
+
     public Account(String email, String password, String firstName, String lastName, Role role) {
         this.email = email;
         this.password = password;
