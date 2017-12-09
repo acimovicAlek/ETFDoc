@@ -139,7 +139,7 @@ public class AccountController {
         }
 
         @RequestMapping(value = "/get", method = RequestMethod.GET)
-        public ResponseEntity getAccountById(@RequestAttribute("id")Long id){
+        public ResponseEntity getAccountById(@RequestParam Long id){
 
             try{
 
@@ -153,7 +153,7 @@ public class AccountController {
         }
 
         @RequestMapping(value = "/getbyemail", method = RequestMethod.GET)
-        public ResponseEntity getAccountByEmail(@RequestAttribute("email")String email){
+        public ResponseEntity getAccountByEmail(@RequestParam String email){
 
             try{
 

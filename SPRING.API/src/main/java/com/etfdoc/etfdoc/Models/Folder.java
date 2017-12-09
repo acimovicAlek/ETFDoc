@@ -16,6 +16,8 @@ public class Folder implements Serializable{
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = Folder.class)
     private Folder parentFolder;
 
+    public Folder() {}
+
     public Folder(String name, Account owner, Boolean private_flag, Folder parentFolder) {
         this.name = name;
         this.owner = owner;
