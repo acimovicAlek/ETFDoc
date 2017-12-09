@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { PostData } from '../_services/PostData.js';
 
 class Form extends Component {
@@ -23,16 +24,29 @@ class Form extends Component {
         // E-mail regex
         let emre = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if(emre.test(this.state.email)) {
-             if(this.state.password == this.state.repPassword) {
-                PostData('account/register', this.state).then((result) => {
-                    if(result == "true") {
-                        alert('Successfully registred!');
-                        window.location = '/login';
-                    } else
-                        alert('Already exists!');
-                });
+             if(this.state.password === this.state.repPassword) {
+                axios.post('http://localhost:8080/account/create', {
+                    email: this.state.email,
+                    firstName: this.state.first_name,
+                    lastName: this.state.last_name,
+                    password: this.state.password
+                })
+                .then(this.handleSuccess.bind(this))
+                .catch(this.handleError.bind(this));
              } else alert('Not the same password');
         } else alert('Invalid e-mail format.');
+    }
+
+    handleSuccess(response) {
+        if(response.data)
+        {
+            alert('Uspješno ste se registrovali!');
+            window.location = '/login';
+        } 
+    }   
+
+    handleError(error) {
+        alert(error.response.data);
     }
 
     onChange(e) {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { PostData } from '../_services/PostData.js';
 
 class Form extends Component {
@@ -19,15 +20,25 @@ class Form extends Component {
         event.preventDefault();
 
         if(this.state.email && this.state.password) {
-            PostData('login', this.state).then((result) => {
-                let responseJson = result;
-
-                if(result) {
-                    sessionStorage.setItem('userData', JSON.stringify(responseJson));
-                    window.location = '/dashboard';
-                }
-            });
+            if(this.state.email && this.state.password) {
+                axios.post('http://localhost:8080/login', {
+                    email: this.state.email,
+                    password: this.state.password
+                })
+                .then(this.handleSuccess.bind(this))
+                .catch(this.handleError.bind(this));
+            }
         }
+    }
+
+    handleSuccess(response) {
+        console.log("uspjeh");
+        console.log(response);
+    }
+
+    handleError(error) {
+        console.log("neuspjeh");
+        console.log(error);
     }
 
     onChange(e) {
