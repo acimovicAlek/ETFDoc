@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import DocumentPanel from './DocumentPanel';
 
@@ -26,6 +27,10 @@ class HomePanel extends Component {
     }
 
     createFile() {
+      window.location = "document/17"; 
+    }
+
+   /* createFile() {
       let user = {
         id: sessionStorage.getItem('id')
       }
@@ -43,13 +48,39 @@ class HomePanel extends Component {
         d: 1
       }
 
-      // Kod za kreiranje novog dokumenta
-      // Kod za kreiranje permisije za dokument
-      // Otvaranje uređivanja dokumenta
-      window.location = '/document/17'; 
+      axios.post('http://localhost:8080/document/create', {
+        name: '',
+        owner: user.id,
+        privateFlag: true, // ovo stavlja da je uvijek private, jbg
+        folder: null // Nezz šta ću s folderima trneutno ovo je quick fix
+      })
+      .then(this.handleCreateSuccess.bind(this))
+      .catch(this.handleCreateError.bind(this)); 
     }
 
+    handleCreateSuccess(response) {
+      let user = {
+        id: sessionStorage.getItem('id')
+      }
 
+      axios.post('http://localhost:8080/privileges/create', {
+        account: user,
+        document: response.data.id,
+        read: true,
+        wirte: true,
+        update: true
+      })
+      .then(function(res) {
+         window.location = '/document/' + res.data.document;
+      }.bind(this))
+      .catc(function(response) {
+        alert("Something went wrong while creating privliges.");
+      }.bind(this));
+    }
+
+    handleCreateError(error) {
+      alert("Something went wrong while creating the Document.");
+    } */
 
     render () {
         return (
