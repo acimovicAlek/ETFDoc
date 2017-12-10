@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
 class DocumentPanel extends Component {
 
