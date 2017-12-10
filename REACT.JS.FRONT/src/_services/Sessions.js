@@ -1,12 +1,14 @@
 import React from 'react'
-import  { Redirect } from 'react-router-dom'
+import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
 export function mustAuthenticate() {
-    if(sessionStorage.getItem('userData') === null)
+    if(sessionStorage.getItem('token') === null)
         window.location = '/login';
 } 
 
 export function mustNotAuthenticate() {
-    if(sessionStorage.getItem('userData') !== null)
+    if(sessionStorage.getItem('token') !== null)
         window.location = '/dashboard';
 }
+

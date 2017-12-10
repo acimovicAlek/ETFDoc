@@ -3,7 +3,7 @@ import { authenticated } from '../_services/Sessions';
 
 class Menu extends Component {
     render () {
-        if(sessionStorage.getItem('userData') !== null) 
+        if(sessionStorage.getItem('token') !== null) 
         {
             return (
                 <nav id="mainNav" className="navbar">
@@ -13,7 +13,7 @@ class Menu extends Component {
                         </div>
 
                         <ul className="nav navbar-nav navbar-right mainNav-links">
-                            <li><a href="/dashboard">Dashboard</a></li>
+                            <li><a href="/home">Dashboard</a></li>
                             <li><a href="javascript:sessionStorage.clear();location.reload();">Logout</a></li>
                         </ul>
                     </div>

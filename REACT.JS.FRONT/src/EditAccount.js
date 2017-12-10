@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { mustAuthenticate } from './_services/Sessions';
+
 import './EditAccount.css';
 
 import Menu from './common/Menu';
@@ -9,6 +11,10 @@ import EditForm from './editAccount/EditForm';
 class EditAccount extends Component {
   constructor() {
     super();
+  }
+
+  componentWillMount() {
+      mustAuthenticate();
   }
 
   render () {

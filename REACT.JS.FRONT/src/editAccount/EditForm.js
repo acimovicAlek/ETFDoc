@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { PostData } from '../_services/PostData.js';
 
-class Form extends Component {
+class EditForm extends Component {
 
     constructor () {
         super();
@@ -15,22 +14,6 @@ class Form extends Component {
 
         this.edit = this.edit.bind(this);
         this.onChange = this.onChange.bind(this);
-    }
-
-    edit (event) {
-        event.preventDefault();
-        let emre = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if(emre.test(this.state.email)) {
-             if(this.state.password == this.state.repPassword) {
-                PostData('account/register', this.state).then((result) => {
-                    if(result == "true") {
-                        alert('Successfully edited account info!');
-                        window.location = '/login';
-                    } else
-                        alert('Already exists!');
-                });
-             } else alert('Not the same password');
-        } else alert('Invalid e-mail format.');
     }
 
     onChange(e) {
@@ -76,4 +59,4 @@ class Form extends Component {
     }
 };
 
-export default Form;
+export default EditForm;

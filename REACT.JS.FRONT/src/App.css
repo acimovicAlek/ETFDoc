@@ -203,4 +203,28 @@ section#footer {
   line-height: 24px;
   color: #5d5d5d;
   border: 0px;
+  outline: 0;
+}
+
+.naziv-dokumenta {
+  border:0;
+  width: 100%;
+  font-size: 24px;
+  font-weight: 300;
+  outline: 0;
+  color: #020202;
+  padding: 15px 0;
+}
+
+.naziv-dokumenta::placeholder {
+  color: #d5d5d5;
+}
+
+.ql-container {
+  border: 0px!important;
+  padding-top: 30px;
+}
+
+.ql-editor {
+  padding: 15px 0!important;
 }

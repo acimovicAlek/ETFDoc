@@ -11,6 +11,10 @@ class Home extends Component {
     super();
   }
 
+  componentWillMount() {
+
+  }
+
   render () {
     return (
       <div>

@@ -43,7 +43,7 @@ r.connect({ host: 'localhost', port: 28015, db: 'etfdocrt' }, function(err, conn
         // If it does exist, it updates the conflicted 
         socket.on('document-update', function(data) {
             if(data.content) {
-                r.table('documents').insert({ id: data.id, content: data.content, user: data.user}, {conflict: 'update'}).run(conn, function(err, res) {
+                r.table('documents').insert({ id: Number(data.id), content: data.content, name: data.name || null, user: data.user}, {conflict: 'update'}).run(conn, function(err, res) {
                     if(err) throw err;
                 });
             } 
@@ -59,11 +59,18 @@ r.connect({ host: 'localhost', port: 28015, db: 'etfdocrt' }, function(err, conn
         });
 
         // Get current content
-        app.get('/document/:id', function(req, res, next) {
+        app.get('/document/:id/:user', function(req, res, next) {
             r.table('documents').get(Number(req.params.id)).
                 run(conn, function(err, result) {
                     if(err) throw err;
-                    res.send({"content" : result.content});
+                    
+                    if(result == null) {
+                        r.table('documents').insert({ id: Number(req.params.id), content: '', name: '' || null, user: req.params.user}, {conflict: 'update'}).run(conn, function(err, res) {
+                            if(err) throw err;
+                        });
+                    } else {
+                        res.send({"content" : result.content || '', "name" : result.name || ''});
+                    }
                 });
         });
     });

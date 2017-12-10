@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import DocumentPanel from './DocumentPanel';
+
 class HomePanel extends Component {
 
     constructor () {
@@ -8,6 +9,8 @@ class HomePanel extends Component {
         this.state = {
           title:'Public Files'
         };
+
+        this.createFile = this.createFile.bind(this);
     }
 
     openPublic=()=>{
@@ -22,6 +25,32 @@ class HomePanel extends Component {
       });
     }
 
+    createFile() {
+      let user = {
+        id: sessionStorage.getItem('id')
+      }
+
+      let file = {
+        name: '',
+        content: '',
+        creator: user.id
+      }
+
+      let user_permissions = {
+        c: 1,
+        r: 1,
+        u: 1,
+        d: 1
+      }
+
+      // Kod za kreiranje novog dokumenta
+      // Kod za kreiranje permisije za dokument
+      // Otvaranje uređivanja dokumenta
+      window.location = '/document/17'; 
+    }
+
+
+
     render () {
         return (
             <section id="cover" className="cover-fix">
@@ -31,7 +60,7 @@ class HomePanel extends Component {
                     <div className="col-md-2 col-sm-3 col-xs-5 home-col">
                     <div className="nav-side-menu">
                       <div className="add-file-wrapper">
-                        <button className="btn btn-primary add-file-btn">
+                        <button className="btn btn-primary add-file-btn" onClick={this.createFile}>
                           <span className="glyphicon glyphicon-btn glyphicon-list-alt"></span><br></br>New text file
                         </button>
                       </div>

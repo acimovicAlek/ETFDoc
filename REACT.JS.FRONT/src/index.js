@@ -24,7 +24,7 @@ ReactDOM.render (
             <Route path="/register" component={Register}/>
             <Route path="/dashboard" component={Dashboard}/>
             <Route path="/home" component={Home}/>
-            <Route path="/editor" component={Editor}/>
+            <Route path="/document/:document" component={Editor}/>
             <Route path="/editaccount" component={EditAccount}/>
         </div>
     </BrowserRouter>,

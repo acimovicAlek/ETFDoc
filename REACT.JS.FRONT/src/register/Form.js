@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { PostData } from '../_services/PostData.js';
 
 class Form extends Component {
 

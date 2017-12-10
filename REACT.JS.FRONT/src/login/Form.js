@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { PostData } from '../_services/PostData.js';
+import jwtDecode from 'jwt-decode';
 
 class Form extends Component {
      // State constructor
@@ -32,12 +32,27 @@ class Form extends Component {
     }
 
     handleSuccess(response) {
-        console.log("uspjeh");
-        console.log(response);
+        sessionStorage.setItem("token", response.headers.authorization);
+        sessionStorage.setItem("role", response.headers.role);
+
+        let userinfo = jwtDecode(sessionStorage.getItem('token'));
+        let email = userinfo.sub;
+
+        let data = null;
+
+        axios.get('http://localhost:8080/account/getbyemail?email='+email, { })
+        .then(function(res) {
+            console.log(res.data.id);
+            sessionStorage.setItem('id', res.data.id);
+        }.bind(this))   
+        .catch(function(error) {
+            console.log(error.response);
+        }.bind(this));
+
+        window.location = '/home';
     }
 
     handleError(error) {
-        console.log("neuspjeh");
         console.log(error);
     }
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { getParameterByName, currentContent } from '../_services/RealTimeAPI.js';
+import axios from 'axios';
 import openSocket from 'socket.io-client';
+import ReactQuill from 'react-quill';
 
 const socket = openSocket('http://localhost:6400');
 
@@ -9,43 +10,68 @@ class Markdown extends Component {
     constructor () {
         super();
         this.state = {
-          content: '',
-          id: Number(getParameterByName('document')),
-          user: Number(getParameterByName('user')),
-          active: {}
+          text: '',
+          id: '',
+          name: '',
+          user: '',
+          active: {},
+          privs: false
         };
 
         this.onChange = this.onChange.bind(this);
-
-        socket.on('document', (res) => {
-          if(res.new_val.id == this.state.id && res.new_val.user != this.state.user) 
-            this.setState({content: res.new_val.content});
-        });
-
-        currentContent(Number(getParameterByName('document'))).then((result) => {
-          console.log(result);
-          this.setState({content: result.content});
-        });
+        this.onQuillChange = this.onQuillChange.bind(this);
     }
 
     componentWillMount() {
-      // Prije nego se komponenta ucita 
-      // Provjri authentikaciju
-      // mustAuthenticate();
+      this.setState({user: sessionStorage.getItem('id')});
+    }
 
-      // Provjeri da li korisnik ima privliegije da uređuje ovaj dokument
-      // Ako nema treba redirektati negdje, gdje god
-      // Ispisati prouku da ne može pristupiti uređivanju
+    componentDidMount() {
+        // Attache document id
+        let document = this.props.params.document;
+
+        this.setState({
+          id: document,
+        });
+
+        axios.get('http://localhost:6400/document/'+document+'/'+this.state.user, {})
+        .then(this.handleSuccess.bind(this))
+        .catch(this.handleError.bind(this));  
+    }
+
+    handleSuccess(response) {
+      this.setState({
+          text: response.data.content,
+          name: response.data.name
+      });
+    }
+
+    handleError(error) {
+      console.log(error.response);
     }
 
     onChange(e) {
         this.setState({[e.target.name]:e.target.value});
         var obj = {
-          content: e.target.value,
+          content: this.state.text,
+          name: this.state.name,
           id: this.state.id,
           user: this.state.user
         };
+        console.log(obj);
+
         socket.emit('document-update', obj);  
+    }
+
+    onQuillChange(value) {
+      this.setState({ text: value })
+      var obj = {
+          content: this.state.text,
+          name: this.state.name,
+          id: this.state.id,
+          user: this.state.user
+      };
+      socket.emit('document-update', obj);  
     }
 
     render () {
@@ -54,7 +80,7 @@ class Markdown extends Component {
               <div className="container">
                 <div className="row">
                   <div className="col-md-8 col-md-offset-2 col-sm-12 col-xs-12">
-                    <h2>Naziv dokument</h2>
+                    <input type="text" name="name" value={this.state.name} onChangeCapture={this.onChange} className="naziv-dokumenta" placeholder="Enter document name..." />
                       <hr/>
                     <div className="markdown-editor-collaborators">
                       <ul>
@@ -62,7 +88,9 @@ class Markdown extends Component {
                     </div>
                   </div>
                   <div className="col-md-8 col-md-offset-2 col-sm-12 col-xs-12">
-                    <textarea className="editor" name="content" value={this.state.content} onChangeCapture={this.onChange}></textarea>
+                    <ReactQuill theme="snow"
+                                value={this.state.text} 
+                                onChange={this.onQuillChange} />
                   </div>
                 </div>
               </div>
