@@ -8,28 +8,48 @@ public class DocumentVM {
 
     private Long id;
     private String name;
+
+    public Boolean getPrivateFlag() {
+        return privateFlag;
+    }
+
     private String owner;
+
+    public void setPrivateFlag(Boolean privateFlag) {
+        this.privateFlag = privateFlag;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public void setFolder(Long folder) {
+        this.folder = folder;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     private Boolean privateFlag = false;
     private Long folder;
     private Date date;
 
     public DocumentVM(){}
 
-    public DocumentVM(Long id, String name, String owner, Boolean private_flag, Long folder, Date date) {
-        this.id = id;
+    public DocumentVM(String name, String owner, Boolean privateFlag, Long folder) {
         this.name = name;
         this.owner = owner;
-        this.privateFlag = private_flag;
+        this.privateFlag = privateFlag;
         this.folder = folder;
-        this.date = date;
-    }
-
-    public DocumentVM(String name, String owner, Boolean private_flag, Long folder, Date date) {
-        this.name = name;
-        this.owner = owner;
-        this.privateFlag = private_flag;
-        this.folder = folder;
-        this.date = date;
     }
 
 
@@ -43,10 +63,6 @@ public class DocumentVM {
 
     public String getOwner() {
         return owner;
-    }
-
-    public Boolean getPrivate_flag() {
-        return privateFlag;
     }
 
     public Long getFolder() {

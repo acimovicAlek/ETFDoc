@@ -35,7 +35,7 @@ public class DocumentService {
         Document newDocument = new Document(
                 documentVM.getName(),
                 account,
-                documentVM.getPrivate_flag(),
+                documentVM.getPrivateFlag(),
                 parent
         );
 

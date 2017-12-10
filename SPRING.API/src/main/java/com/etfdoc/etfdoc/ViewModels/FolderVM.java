@@ -7,6 +7,27 @@ public class FolderVM {
 
     private Long id;
     private Long parentFolder;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setParentFolder(Long parentFolder) {
+        this.parentFolder = parentFolder;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrivateFlag(Boolean privateFlag) {
+        this.privateFlag = privateFlag;
+    }
+
     private String owner;
     private String name;
     private Boolean privateFlag = false;

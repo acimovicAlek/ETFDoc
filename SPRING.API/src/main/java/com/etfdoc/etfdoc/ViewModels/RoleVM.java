@@ -4,6 +4,15 @@ import com.etfdoc.etfdoc.Models.Role;
 
 public class RoleVM {
     private Long id;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     private String name;
 
     public RoleVM(){}

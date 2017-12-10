@@ -21,7 +21,7 @@ public class DocumentController {
         this.documentService = documentService;
     }
 
-    @RequestMapping(value = "/create", consumes = "application/json", method = RequestMethod.POST )
+    @RequestMapping(value = "/create", method = RequestMethod.POST )
     public ResponseEntity createFolder(@RequestBody DocumentVM documentVM)
     {
         try {
