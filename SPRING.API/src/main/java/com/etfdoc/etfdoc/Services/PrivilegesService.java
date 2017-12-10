@@ -42,10 +42,10 @@ public class PrivilegesService {
 
     }
 
-    public Boolean createPrivilege(PrivilegesVM privilegesVM, String email, Long documentID){
+    public Boolean createPrivilege(PrivilegesVM privilegesVM){
 
-        Account account = accountRepository.getAccountByEmail(email);
-        Document document = documentRepository.findById(documentID);
+        Account account = accountRepository.getAccountByEmail(privilegesVM.getAccount());
+        Document document = documentRepository.findById(privilegesVM.getDocument());
 
         Privileges newPrivileges = new Privileges(
                 account,
