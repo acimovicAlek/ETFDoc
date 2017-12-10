@@ -8,14 +8,14 @@ public class DocumentVM {
 
     private Long id;
     private String name;
-    private AccountVM owner;
+    private String owner;
     private Boolean privateFlag = false;
-    private FolderVM folder;
+    private Long folder;
     private Date date;
 
     public DocumentVM(){}
 
-    public DocumentVM(Long id, String name, AccountVM owner, Boolean private_flag, FolderVM folder, Date date) {
+    public DocumentVM(Long id, String name, String owner, Boolean private_flag, Long folder, Date date) {
         this.id = id;
         this.name = name;
         this.owner = owner;
@@ -24,7 +24,7 @@ public class DocumentVM {
         this.date = date;
     }
 
-    public DocumentVM(String name, AccountVM owner, Boolean private_flag, FolderVM folder, Date date) {
+    public DocumentVM(String name, String owner, Boolean private_flag, Long folder, Date date) {
         this.name = name;
         this.owner = owner;
         this.privateFlag = private_flag;
@@ -32,14 +32,6 @@ public class DocumentVM {
         this.date = date;
     }
 
-    public DocumentVM(Document document) {
-        this.id = document.getId();
-        this.name = document.getName();
-        this.owner = new AccountVM(document.getOwner());
-        this.privateFlag = document.getPrivateFlag();
-        this.folder = new FolderVM(document.getFolder());
-        this.date = document.getDate();
-    }
 
     public Long getId() {
         return id;
@@ -49,7 +41,7 @@ public class DocumentVM {
         return name;
     }
 
-    public AccountVM getOwner() {
+    public String getOwner() {
         return owner;
     }
 
@@ -57,7 +49,7 @@ public class DocumentVM {
         return privateFlag;
     }
 
-    public FolderVM getFolder() {
+    public Long getFolder() {
         return folder;
     }
 

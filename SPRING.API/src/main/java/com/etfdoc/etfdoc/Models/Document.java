@@ -22,6 +22,8 @@ public class Document implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Date date;
 
+    public Document() {}
+
     public Document(String name, Account owner, Boolean private_flag, Folder folder) {
         this.name = name;
         this.owner = owner;

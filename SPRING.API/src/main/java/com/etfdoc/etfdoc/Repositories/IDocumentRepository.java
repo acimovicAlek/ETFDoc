@@ -17,4 +17,10 @@ public interface IDocumentRepository extends PagingAndSortingRepository<Document
 
     Document findById(Long id);
 
+    List<Document> findAllByOwnerAndFolderIsNull(Account owner);
+
+    List<Document> findAllByOwnerAndFolder(Account owner, Folder folder);
+
+    List<Document> findAllByFolderIsNullAndPrivateFlagIsFalse();
+
 }

@@ -12,4 +12,14 @@ public interface IFolderRepository extends PagingAndSortingRepository<Folder,Lon
 
     List<Folder> findAllByParentFolder(Folder parentFolder);
 
+    Folder getById(Long id);
+
+    List<Folder> getAllByParentFolder(Folder parent);
+
+    List<Folder> getAllByOwner(Account owner);
+
+    List<Folder> findAllByPrivateFlagIsFalseAndParentFolderIsNull();
+
+    List<Folder> findAllByOwnerAndParentFolderIsNull(Account owner);
+
 }

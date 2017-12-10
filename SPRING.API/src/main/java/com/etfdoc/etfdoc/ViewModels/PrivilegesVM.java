@@ -29,14 +29,6 @@ public class PrivilegesVM {
         this.update = update;
     }
 
-    public PrivilegesVM(Privileges privileges) {
-        this.id = privileges.getId();
-        this.account = new AccountVM(privileges.getAccount());
-        this.document = new DocumentVM(privileges.getDocument());
-        this.read = privileges.getRead();
-        this.write = privileges.getWrite();
-        this.update = privileges.getUpdate();
-    }
 
     public Long getId() {
         return id;
