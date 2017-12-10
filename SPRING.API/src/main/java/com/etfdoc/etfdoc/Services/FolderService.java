@@ -18,13 +18,13 @@ public class FolderService {
     @Autowired
     private IFolderRepository folderRepository;
 
-    public Boolean createFolder(FolderVM folderVM, String email, Long parentID){
+    public Boolean createFolder(FolderVM folderVM){
 
-        Account account = accountRepository.getAccountByEmail(email);
+        Account account = accountRepository.getAccountByEmail(folderVM.getOwner());
 
         Folder parent = null;
 
-        if(parentID != -1) parent = folderRepository.getById(parentID);
+        if(folderVM.getParentFolder() != -1) parent = folderRepository.getById(folderVM.getParentFolder());
 
         Folder newFolder = new Folder(folderVM.getName(), account,  folderVM.getPrivateFlag(), parent);
         Folder created = folderRepository.save(newFolder);
@@ -59,7 +59,7 @@ public class FolderService {
         return  null;
     }
 
-    public List<Folder> getAllRootPublic(Boolean priv){
+    public List<Folder> getAllRootPublic(){
 
         return folderRepository.findAllByPrivateFlagIsFalseAndParentFolderIsNull();
 

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class DocumentService {
 
     @Autowired
@@ -23,13 +24,13 @@ public class DocumentService {
     @Autowired
     private IAccountRepository accountRepository;
 
-    public Boolean createDocument(DocumentVM documentVM, String ownerEmail, Long parentID){
+    public Boolean createDocument(DocumentVM documentVM){
 
-        Account account = accountRepository.getAccountByEmail(ownerEmail);
+        Account account = accountRepository.getAccountByEmail(documentVM.getOwner());
 
         Folder parent = null;
 
-        if(parentID != -1) parent = folderRepository.getById(parentID);
+        if(documentVM.getFolder() != -1) parent = folderRepository.getById(documentVM.getFolder());
 
         Document newDocument = new Document(
                 documentVM.getName(),
