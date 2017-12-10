@@ -5,14 +5,14 @@ import com.etfdoc.etfdoc.Models.Privileges;
 public class PrivilegesVM {
 
     private Long id;
-    private AccountVM account;
-    private DocumentVM document;
+    private String account;
+    private Long document;
     private Boolean read = false;
     private Boolean write = false;
     private Boolean update = false;
 
     public PrivilegesVM(){}
-    public PrivilegesVM(Long id, AccountVM account, DocumentVM document, Boolean read, Boolean write, Boolean update) {
+    public PrivilegesVM(Long id, String account, Long document, Boolean read, Boolean write, Boolean update) {
         this.id = id;
         this.account = account;
         this.document = document;
@@ -21,7 +21,7 @@ public class PrivilegesVM {
         this.update = update;
     }
 
-    public PrivilegesVM(AccountVM account, DocumentVM document, Boolean read, Boolean write, Boolean update) {
+    public PrivilegesVM(String account, Long document, Boolean read, Boolean write, Boolean update) {
         this.account = account;
         this.document = document;
         this.read = read;
@@ -34,11 +34,11 @@ public class PrivilegesVM {
         return id;
     }
 
-    public AccountVM getAccount() {
+    public String getAccount() {
         return account;
     }
 
-    public DocumentVM getDocument() {
+    public Long getDocument() {
         return document;
     }
 
