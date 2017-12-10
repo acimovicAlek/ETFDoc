@@ -37,90 +37,6 @@ public class AccountController {
         @Autowired
         IAccountRepository accountRepo;
 
-        /*
-        private String encodePassword(String password, String email) {
-            String authPassword = password + email + "probamosecurity";
-
-            try {
-                MessageDigest md = MessageDigest.getInstance("MD5");
-                md.update(authPassword.getBytes());
-                byte[] digest = md.digest();
-                String encodedPassword = DatatypeConverter.printHexBinary(digest).toUpperCase();
-
-                return encodedPassword;
-            }catch(NoSuchAlgorithmException exc){
-                return exc.getMessage();
-            }
-        }
-
-        @RequestMapping(value = "/register", method = RequestMethod.POST)
-        public @ResponseBody boolean register(@RequestParam String email,
-                                                     @RequestParam String password,
-                                                     @RequestParam String first_name,
-                                                     @RequestParam String last_name) throws NoSuchAlgorithmException
-        {
-            JSONObject account = new JSONObject();
-
-            if(accountRepo.checkMail(email)) return false;
-
-            Account acc = new Account();
-
-            acc.setEmail(email);
-            acc.setFirstName(first_name);
-            acc.setLastName(last_name);
-
-
-            String authPassword = password + email + "probamosecurity";
-
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(authPassword.getBytes());
-            byte[] digest = md.digest();
-            String encodedPassword = DatatypeConverter.printHexBinary(digest).toUpperCase();
-
-            acc.setPassword(encodedPassword);
-
-            if(accountRepo.save(acc) != null)
-                return true;
-            else
-                return false;
-        }
-
-        @RequestMapping(path="/login", method = RequestMethod.POST)
-        public @ResponseBody ResponseEntity<String> login (@RequestParam String email, @RequestParam String password) throws NoSuchAlgorithmException {
-
-            String authPassword = password + email + "probamosecurity";
-
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(authPassword.getBytes());
-            byte[] digest = md.digest();
-            String encodedPassword = DatatypeConverter.printHexBinary(digest).toUpperCase();
-
-            Page<Account> users = accountRepo.findByMailAndPass(email, encodedPassword, new PageRequest(0, 1));
-
-            if(users.getContent().size() > 0)
-            {
-                JSONObject account = new JSONObject();
-                Account loggedUser = users.getContent().get(0);
-
-                try{
-                    account.put("id", loggedUser.getId());
-                    account.put("first_name", loggedUser.getFirstName());
-                    account.put("last_name", loggedUser.getLastName());
-                    account.put("email", loggedUser.getEmail());
-
-                    return new ResponseEntity<String>(account.toString(), HttpStatus.OK);
-                }catch(Exception ex){
-                    String returnMsg =  "{\"message\":\"" + ex.getMessage() + "\"}";
-                    return new ResponseEntity<String>(returnMsg, HttpStatus.BAD_REQUEST);
-                }
-            }
-            else
-            {
-                String returnMsg = "{\"message\":\"Invalid credentials\"}";
-                return new ResponseEntity<String>(returnMsg, HttpStatus.BAD_REQUEST);
-            }
-        }
-        */
 
         @RequestMapping(value = "/create", consumes = "application/json", method = RequestMethod.POST )
         public ResponseEntity createAccount(@RequestBody AccountVM accountVM)
@@ -139,7 +55,7 @@ public class AccountController {
         }
 
         @RequestMapping(value = "/get", method = RequestMethod.GET)
-        public ResponseEntity getAccountById(@RequestAttribute("id")Long id){
+        public ResponseEntity getAccountById(@RequestParam Long id){
 
             try{
 
@@ -153,7 +69,7 @@ public class AccountController {
         }
 
         @RequestMapping(value = "/getbyemail", method = RequestMethod.GET)
-        public ResponseEntity getAccountByEmail(@RequestAttribute("email")String email){
+        public ResponseEntity getAccountByEmail(@RequestParam String email){
 
             try{
 

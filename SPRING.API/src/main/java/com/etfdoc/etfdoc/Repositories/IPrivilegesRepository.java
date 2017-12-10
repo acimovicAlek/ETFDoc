@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface IPrivilegesRepository extends PagingAndSortingRepository<Privileges, Long> {
 
-    Privileges findByAccountAndDocument(Account account, Document document);
+    Privileges findByAccount_EmailAndDocument_Id(String email, Long documentID);
 
-    List<Privileges> findAllByAccount(Account account);
+    List<Privileges> findAllByAccount_Email(String email);
 
-    List<Privileges> findAllByDocument(Account document);
+    List<Privileges> findAllByDocument_Id(Long documentID);
 
 }
