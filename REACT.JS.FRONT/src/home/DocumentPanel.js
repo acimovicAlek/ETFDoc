@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import Doc from '../home/Doc';
 
 class DocumentPanel extends Component {
 
@@ -18,13 +19,17 @@ class DocumentPanel extends Component {
        this.setState({email: userinfo.sub});
     }
 
-    componentDidMoutn() {
+    componentDidMount() {
       axios.get('http://localhost:8080/document/getByRootAndOwner?email=' + this.state.email, { })
       .then(this.handleSuccess.bind(this))
       .catch(this.handleError.bind(this));
     }
 
     handleSuccess(response) {
+
+
+      this.setState({documents:response.data});
+      console.log(response);
 
     } 
 
@@ -33,18 +38,15 @@ class DocumentPanel extends Component {
     }
 
     render () {
+
+        var elements = this.state.documents.map((ele) => <Doc doc={ele}/>);
+
         return (
                 <div className="container container-document">
                   <div className="row document-row">
-
-                    <div className="col-md-2 col-sm-6 col-xs-12 document-col">
-                      <a className="document-wrapper">
-                      <div className="document-box">
-                        <span className="glyphicon glyphicon-file glyphicon-list-alt"></span><br></br><br></br>Test file
-                      </div>
-                      </a>
-                    </div>
-
+                  <div className="col-md-2 col-sm-6 col-xs-12 document-col">
+                    {elements}
+                  </div>
                   </div>
                 </div>
 
