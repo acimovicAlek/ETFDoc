@@ -26,7 +26,7 @@ class Markdown extends Component {
 
         socket.on("document",(res) => {
           console.log(res);
-          if(this.new_val.id == this.state.id){
+          if(this.new_val.user == this.state.user){
             this.setState({
               text : res.new_val.content,
               name : res.new_val.name
