@@ -33,6 +33,7 @@ r.connect({ host: 'localhost', port: 28015, db: 'etfdocrt' }, function(err, conn
     io.on('connection', function(socket) {
         console.log("Someone connected to the socket.");
 
+
         // Show if someone has disconnected
         socket.on('disconnect', function() {
             console.log("Someone disconnected from the socket.");
@@ -43,6 +44,7 @@ r.connect({ host: 'localhost', port: 28015, db: 'etfdocrt' }, function(err, conn
         // If it does exist, it updates the conflicted 
         socket.on('document-update', function(data) {
             if(data.content) {
+                console.log("unio u bayz");
                 r.table('documents').insert({ id: Number(data.id), content: data.content, name: data.name || null, user: data.user}, {conflict: 'update'}).run(conn, function(err, res) {
                     if(err) throw err;
                 });

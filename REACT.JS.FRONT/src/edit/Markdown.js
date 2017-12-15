@@ -3,7 +3,10 @@ import axios from 'axios';
 import openSocket from 'socket.io-client';
 import ReactQuill from 'react-quill';
 
-const socket = openSocket('http://localhost:6400');
+const protocol = window.location.protocol;
+const hostname = window.location.hostname;
+
+const socket = openSocket(protocol+'//'+hostname+':6400');
 
 class Markdown extends Component {
 
@@ -20,6 +23,16 @@ class Markdown extends Component {
 
         this.onChange = this.onChange.bind(this);
         this.onQuillChange = this.onQuillChange.bind(this);
+
+        socket.on("document",(res) => {
+          console.log(res);
+          if(this.new_val.id == this.state.id){
+            this.setState({
+              text : res.new_val.content,
+              name : res.new_val.name
+            })
+          }
+        });
     }
 
     componentWillMount() {
@@ -34,7 +47,7 @@ class Markdown extends Component {
           id: document,
         });
 
-        axios.get('http://localhost:6400/document/'+document+'/'+this.state.user, {})
+        axios.get(protocol+'//'+hostname+':6400/document/'+document+'/'+this.state.user, {})
         .then(this.handleSuccess.bind(this))
         .catch(this.handleError.bind(this));  
     }
@@ -71,6 +84,9 @@ class Markdown extends Component {
           id: this.state.id,
           user: this.state.user
       };
+
+      console.log(obj);
+
       socket.emit('document-update', obj);  
     }
 
