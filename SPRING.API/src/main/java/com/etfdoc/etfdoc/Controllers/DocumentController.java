@@ -110,5 +110,13 @@ public class DocumentController {
         }
     }
 
+    @RequestMapping(value = "/getByKeywordAndCollaborator", method = RequestMethod.GET)
+    public ResponseEntity getByKeywordAndCollaborator(@RequestParam String keyword, String email){
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(documentService.findByKeywordAndColobarator(keyword,email));
+        }catch (ServiceException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getLocalizedMessage());
+        }
+    }
 
 }

@@ -117,4 +117,12 @@ public class DocumentService {
 
     }
 
+    public List<Document> findByKeywordAndColobarator(String keyword, String email){
+
+        Account owner = accountRepository.getAccountByEmail(email);
+
+        return documentRepository.findAllByKeywordAndCollaborator("%"+keyword+"%", owner.getId());
+
+    }
+
 }
