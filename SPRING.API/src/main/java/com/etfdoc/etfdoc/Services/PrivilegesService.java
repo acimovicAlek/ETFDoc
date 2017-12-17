@@ -42,7 +42,7 @@ public class PrivilegesService {
 
     }
 
-    public Boolean createPrivilege(PrivilegesVM privilegesVM){
+    public Privileges createPrivilege(PrivilegesVM privilegesVM){
 
         Account account = accountRepository.getAccountByEmail(privilegesVM.getAccount());
         Document document = documentRepository.findById(privilegesVM.getDocument());
@@ -55,9 +55,7 @@ public class PrivilegesService {
                 privilegesVM.getUpdate()
         );
 
-        Privileges created = privilegesRepository.save(newPrivileges);
-
-        return (created != null);
+        return privilegesRepository.save(newPrivileges);
 
     }
 

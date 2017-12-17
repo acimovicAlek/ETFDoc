@@ -36,12 +36,12 @@ public class AccountService {
 
     }
 
-    public Boolean createAccount(AccountVM accountVM, String role) throws NoSuchAlgorithmException {
+    public Account createAccount(AccountVM accountVM, String role) throws NoSuchAlgorithmException {
 
         if(accountRepository.getAccountByEmail(accountVM.getEmail()) != null){
             throw new ServiceException("Account with the entered email already exists!");
         }else if(accountVM == null  || !isValidEmailAddress(accountVM.getEmail()) ) {
-            return  false;
+            throw new SecurityException("Mail is not valid or accountVM is null");
         }else{
 
             /* Generating password
@@ -59,8 +59,7 @@ public class AccountService {
                     accountVM.getFirstName(),
                     accountVM.getLastName(),
                     roleRepository.findByName(role));
-            Account createdAccount = accountRepository.save(newAccount);
-            return (createdAccount != null);
+            return accountRepository.save(newAccount);
         }
 
     }
