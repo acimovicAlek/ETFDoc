@@ -19,7 +19,6 @@ public class Document implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = Account.class)
     private  Account owner;
     private Boolean privateFlag = false;
-    @ManyToOne(cascade = CascadeType.ALL, targetEntity = Folder.class)
     private Boolean native_flag = true;
     @DateTimeFormat
     @GeneratedValue(strategy = GenerationType.AUTO)

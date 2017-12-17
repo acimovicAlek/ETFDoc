@@ -1,14 +1,11 @@
 package com.etfdoc.etfdoc.Controllers;
 
-import com.etfdoc.etfdoc.Models.Account;
 import com.etfdoc.etfdoc.Models.Document;
 import com.etfdoc.etfdoc.Models.DocumentBlob;
 import com.etfdoc.etfdoc.Services.AccountService;
 import com.etfdoc.etfdoc.Services.DocumentBlobService;
 import com.etfdoc.etfdoc.Services.DocumentService;
 import com.etfdoc.etfdoc.ViewModels.DocumentVM;
-import com.etfdoc.etfdoc.ViewModels.FolderVM;
-import org.hibernate.service.Service;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.security.Principal;
 import java.util.Iterator;
 
 @RestController

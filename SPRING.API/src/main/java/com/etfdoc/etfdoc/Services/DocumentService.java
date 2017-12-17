@@ -2,7 +2,6 @@ package com.etfdoc.etfdoc.Services;
 
 import com.etfdoc.etfdoc.Models.Account;
 import com.etfdoc.etfdoc.Models.Document;
-import com.etfdoc.etfdoc.Models.Folder;
 import com.etfdoc.etfdoc.Models.Privileges;
 import com.etfdoc.etfdoc.Repositories.*;
 import com.etfdoc.etfdoc.ViewModels.DocumentVM;
@@ -17,9 +16,6 @@ public class DocumentService {
 
     @Autowired
     private IDocumentRepository documentRepository;
-
-    @Autowired
-    private IFolderRepository folderRepository;
 
     @Autowired
     private IAccountRepository accountRepository;

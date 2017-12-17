@@ -2,7 +2,6 @@ package com.etfdoc.etfdoc.Repositories;
 
 import com.etfdoc.etfdoc.Models.Account;
 import com.etfdoc.etfdoc.Models.Document;
-import com.etfdoc.etfdoc.Models.Folder;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import java.util.List;
