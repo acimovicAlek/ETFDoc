@@ -3,14 +3,16 @@ package com.etfdoc.etfdoc.Services;
 import com.etfdoc.etfdoc.Models.Account;
 import com.etfdoc.etfdoc.Models.Document;
 import com.etfdoc.etfdoc.Models.Folder;
+import com.etfdoc.etfdoc.Models.Privileges;
 import com.etfdoc.etfdoc.Repositories.IAccountRepository;
 import com.etfdoc.etfdoc.Repositories.IDocumentRepository;
 import com.etfdoc.etfdoc.Repositories.IFolderRepository;
+import com.etfdoc.etfdoc.Repositories.IPrivilegesRepository;
 import com.etfdoc.etfdoc.ViewModels.DocumentVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class DocumentService {
@@ -23,6 +25,9 @@ public class DocumentService {
 
     @Autowired
     private IAccountRepository accountRepository;
+
+    @Autowired
+    private IPrivilegesRepository privilegesRepository;
 
     public Document createDocument(DocumentVM documentVM){
 
@@ -74,6 +79,39 @@ public class DocumentService {
 
     public List<Document> getAllRootAndPublic(){
         return documentRepository.findAllByFolderIsNullAndPrivateFlagIsFalse();
+    }
+
+    public List<Document> getAllRoot(){
+        return documentRepository.findAllByPrivateFlag(false);
+    }
+
+    public List<Document> getAllPrivate(String email){
+
+        Account owner = accountRepository.getAccountByEmail(email);
+        List<Document> result = documentRepository.findAllByOwner(owner);
+
+        if(result != null) result.addAll(getByPrivileges(email));
+        else result = getByPrivileges(email);
+
+        return result;
+
+    }
+
+    public List<Document> getByPrivileges(String email){
+
+        List<Privileges> privileges = privilegesRepository.findAllByAccount_Email(email);
+
+        List<Document> result = new ArrayList<Document>();
+
+        for (Privileges i:
+             privileges) {
+
+            result.add(i.getDocument());
+
+        }
+
+        return result;
+
     }
 
 }

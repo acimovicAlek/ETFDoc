@@ -3,11 +3,14 @@ package com.etfdoc.etfdoc.Controllers;
 import com.etfdoc.etfdoc.Services.DocumentService;
 import com.etfdoc.etfdoc.ViewModels.DocumentVM;
 import com.etfdoc.etfdoc.ViewModels.FolderVM;
+import org.hibernate.service.Service;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -74,6 +77,26 @@ public class DocumentController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body(e.getLocalizedMessage());
         }
+    }
+
+    @RequestMapping(value = "/public", method = RequestMethod.GET)
+    public ResponseEntity getAllPublic(){
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(documentService.getAllRoot());
+        }catch (ServiceException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getLocalizedMessage());
+        }
+    }
+
+    @RequestMapping(value = "private", method = RequestMethod.GET)
+    public ResponseEntity getAllPrivate(@RequestBody Principal principal){
+
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(documentService.getAllPrivate(principal.getName()));
+        }catch (ServiceException e){
+            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getLocalizedMessage());
+        }
+
     }
 
 
