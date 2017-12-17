@@ -42,8 +42,8 @@ public class DocumentService {
                 documentVM.getName(),
                 account,
                 documentVM.getPrivateFlag(),
-                parent
-        );
+                documentVM.getNative_flag()
+                );
 
         Document createdDocument = documentRepository.save(newDocument);
 
@@ -56,32 +56,6 @@ public class DocumentService {
 
         return (null != documentRepository.findById(documentID));
 
-    }
-
-    public List<Document> getAllByOwnerAndRoot(String email){
-
-        Account owner = accountRepository.getAccountByEmail(email);
-
-        if(owner != null) return documentRepository.findAllByOwnerAndFolderIsNull(owner);
-
-        return null;
-
-    }
-
-    public List<Document> getAllByOwnerAndFolder(String email, Long folderID){
-
-        Account owner = accountRepository.getAccountByEmail(email);
-
-        Folder folder = folderRepository.getById(folderID);
-
-        if(owner != null && folder != null) return documentRepository.findAllByOwnerAndFolder(owner, folder);
-
-        return null;
-
-    }
-
-    public List<Document> getAllRootAndPublic(){
-        return documentRepository.findAllByFolderIsNullAndPrivateFlagIsFalse();
     }
 
     public List<Document> getAllRoot(){

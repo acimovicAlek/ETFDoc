@@ -13,15 +13,7 @@ public interface IDocumentRepository extends PagingAndSortingRepository<Document
 
     List<Document> findAllByPrivateFlag(Boolean privateFlag);
 
-    List<Document> findAllByFolder(Folder folder);
-
     Document findById(Long id);
-
-    List<Document> findAllByOwnerAndFolderIsNull(Account owner);
-
-    List<Document> findAllByOwnerAndFolder(Account owner, Folder folder);
-
-    List<Document> findAllByFolderIsNullAndPrivateFlagIsFalse();
 
     @Query("SELECT DISTINCT d FROM docmument d, privileges p WHERE d.owner_id = ?2 OR " +
             "p.account_id = ?2 OR d.prvate_flag = TRUE AND d.name LIKE  ?1")

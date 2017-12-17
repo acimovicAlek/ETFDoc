@@ -9,6 +9,16 @@ public class DocumentVM {
     private Long id;
     private String name;
 
+    public Boolean getNative_flag() {
+        return native_flag;
+    }
+
+    public void setNative_flag(Boolean native_flag) {
+        this.native_flag = native_flag;
+    }
+
+    private Boolean native_flag;
+
     public Boolean getPrivateFlag() {
         return privateFlag;
     }
@@ -45,11 +55,11 @@ public class DocumentVM {
 
     public DocumentVM(){}
 
-    public DocumentVM(String name, String owner, Boolean privateFlag, Long folder) {
+    public DocumentVM(String name, String owner, Boolean privateFlag, Boolean native_flag) {
         this.name = name;
         this.owner = owner;
         this.privateFlag = privateFlag;
-        this.folder = folder;
+        this.native_flag = native_flag;
     }
 
 
