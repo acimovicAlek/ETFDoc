@@ -18,8 +18,8 @@ class Doc extends Component{
                   <span className="glyphicon glyphicon-trash"></span>
                   </a>
                   <br></br>
-                  <a className="document-wrapper" href={'document/'}/*+this.props.doc.id}*/>
-                    <div>Name</div>
+                  <a className="document-wrapper" href={'document/'}/*+this.props.doc.id}*/>{this.props.doc.name}
+
                   </a>
                 </div>
 
