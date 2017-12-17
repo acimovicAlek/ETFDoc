@@ -71,7 +71,7 @@ class HomePanel extends Component {
         document: response.data.id,
         read: true,
         write: true,
-        update: true
+        delete: true
       })
       .then(function(res) {
           window.location = '/document/' + res.data.document;
@@ -130,7 +130,6 @@ class HomePanel extends Component {
                     <div className="col-md-10 col-sm-9 col-xs-7 home-col">
                       <h1 className="title">{this.state.title}</h1>
                       <DocumentPanel />
-                        />
                     </div>
                    </div>
                 </div>
