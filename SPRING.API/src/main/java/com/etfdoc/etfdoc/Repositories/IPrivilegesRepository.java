@@ -15,4 +15,5 @@ public interface IPrivilegesRepository extends PagingAndSortingRepository<Privil
 
     List<Privileges> findAllByDocument_Id(Long documentID);
 
+
 }

@@ -77,7 +77,7 @@ class HomePanel extends Component {
         document: response.data.id,
         read: true,
         write: true,
-        update: true
+        delete: true
       })
       .then(function(res) {
           window.location = '/document/' + res.data.document;
