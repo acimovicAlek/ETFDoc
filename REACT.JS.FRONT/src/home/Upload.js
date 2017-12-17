@@ -1,20 +1,29 @@
 import React,{ Component ,PropTypes} from 'react'
 import axios,{post} from 'axios';
 import Modal from 'react-responsive-modal';
+import jwtDecode from 'jwt-decode';
+
+
 class Upload extends Component {
 
   constructor(props) {
     super(props);
     this.state ={
+      email: null,
       file:null,
       open: false
     }
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
     this.fileUpload = this.fileUpload.bind(this)
-    this.onOpenModal = this.onOpenModal.bind(this)
-    this.onCloseModal = this.onCloseModal.bind(this)
   }
+
+  componentWillMount() {
+     let userinfo = jwtDecode(sessionStorage.getItem('token'));
+     this.setState({email: userinfo.sub});
+
+  }
+
   onFormSubmit(e){
     e.preventDefault() // Stop form submit
     this.fileUpload(this.state.file);
@@ -24,8 +33,23 @@ class Upload extends Component {
   }
 
   fileUpload(file){
+    const url = 'http://localhost:8080/document/upload?email='+this.state.email;
     const formData = new FormData();
     formData.append('file',file)
+    const config = {
+            headers: {
+    'content-type': 'multipart/form-data'
+            }
+        }
+    return  post(url, formData,config).then((response)=>{
+      console.log(response.data);
+      this.setState({open:false});
+    })
+    .catch((error)=>{
+      alert("something went wrong");
+      console.log(error.response);
+  })
+
 
   }
 
