@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import openSocket from 'socket.io-client';
-import ReactQuill from 'react-quill';
+import jwtDecode from 'jwt-decode';
 
 const protocol = window.location.protocol;
 const hostname = window.location.hostname;
@@ -18,25 +18,22 @@ class Markdown extends Component {
           name: '',
           user: '',
           active: {},
+          recieved: false,
           privs: false
         };
 
-        this.onChange = this.onChange.bind(this);
-        this.onQuillChange = this.onQuillChange.bind(this);
+        this.onNameChange = this.onNameChange.bind(this);
+        this.onTextChange = this.onTextChange.bind(this);
 
         socket.on("document",(res) => {
           console.log(res);
-          if(this.new_val.user == this.state.user){
+          if(res.new_val.document === this.state.documetn && Number(res.new_val.user) != this.state.user){
             this.setState({
               text : res.new_val.content,
               name : res.new_val.name
             })
           }
         });
-    }
-
-    componentWillMount() {
-      this.setState({user: sessionStorage.getItem('id')});
     }
 
     componentDidMount() {
@@ -47,12 +44,27 @@ class Markdown extends Component {
           id: document,
         });
 
-        axios.get(protocol+'//'+hostname+':6400/document/'+document+'/'+this.state.user, {})
-        .then(this.handleSuccess.bind(this))
-        .catch(this.handleError.bind(this));  
+        let userinfo = jwtDecode(sessionStorage.getItem('token'));
+        let email = userinfo.sub;
+
+        let data = null;
+
+        axios.get('http://'+hostname+':8080/account/getbyemail?email='+email, { })
+        .then(function(res) {
+            this.setState({user: res.data.id});
+
+            // Fetch the data
+            axios.get('http://'+hostname+':6400/document/'+document+'/'+this.state.user, {})
+            .then(this.handleSuccess.bind(this))
+            .catch(this.handleError.bind(this)); 
+        }.bind(this))   
+        .catch(function(error) {
+            console.log(error.response);
+        }.bind(this));   
     }
 
     handleSuccess(response) {
+      console.log(response);
       this.setState({
           text: response.data.content,
           name: response.data.name
@@ -63,29 +75,27 @@ class Markdown extends Component {
       console.log(error.response);
     }
 
-    onChange(e) {
+    onNameChange(e) {
         this.setState({[e.target.name]:e.target.value});
         var obj = {
           content: this.state.text,
-          name: this.state.name,
+          name: e.target.value,
           id: this.state.id,
-          user: this.state.user
+          user: this.state.user,
+          recieved: false
         };
-        console.log(obj);
-
         socket.emit('document-update', obj);  
     }
 
-    onQuillChange(value) {
-      this.setState({ text: value })
+    onTextChange(e) {
+      this.setState({ text: e.target.value })
       var obj = {
-          content: this.state.text,
+          content: e.target.value,
           name: this.state.name,
           id: this.state.id,
-          user: this.state.user
+          user: this.state.user,
+          recieved: false
       };
-
-      console.log(obj);
 
       socket.emit('document-update', obj);  
     }
@@ -96,7 +106,7 @@ class Markdown extends Component {
               <div className="container">
                 <div className="row">
                   <div className="col-md-8 col-md-offset-2 col-sm-12 col-xs-12">
-                    <input type="text" name="name" value={this.state.name} onChangeCapture={this.onChange} className="naziv-dokumenta" placeholder="Enter document name..." />
+                    <input type="text" name="name" value={this.state.name} onChangeCapture={this.onNameChange} className="naziv-dokumenta" placeholder="Enter document name..." />
                       <hr/>
                     <div className="markdown-editor-collaborators">
                       <ul>
@@ -104,9 +114,7 @@ class Markdown extends Component {
                     </div>
                   </div>
                   <div className="col-md-8 col-md-offset-2 col-sm-12 col-xs-12">
-                    <ReactQuill theme="snow"
-                                value={this.state.text} 
-                                onChange={this.onQuillChange} />
+                    <textarea className="ql-editor" name="text" value={this.state.text} onChangeCapture={this.onTextChange}></textarea>
                   </div>
                 </div>
               </div>

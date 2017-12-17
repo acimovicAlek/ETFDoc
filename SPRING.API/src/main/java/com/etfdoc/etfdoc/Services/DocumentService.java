@@ -24,7 +24,7 @@ public class DocumentService {
     @Autowired
     private IAccountRepository accountRepository;
 
-    public Boolean createDocument(DocumentVM documentVM){
+    public Document createDocument(DocumentVM documentVM){
 
         Account account = accountRepository.getAccountByEmail(documentVM.getOwner());
 
@@ -41,8 +41,7 @@ public class DocumentService {
 
         Document createdDocument = documentRepository.save(newDocument);
 
-        return (createdDocument != null);
-
+        return createdDocument;
     }
 
     public void deleteDocument(Long documentID){

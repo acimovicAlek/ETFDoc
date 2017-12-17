@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
-import Doc from '../home/Doc';
+import Doc from './Doc';
 
 class DocumentPanel extends Component {
 
@@ -38,8 +38,7 @@ class DocumentPanel extends Component {
     }
 
     render () {
-
-        var elements = this.state.documents.map((ele) => <Doc doc={ele}/>);
+        let elements = this.state.documents.map((ele) => <Doc doc={ele}/>);
 
         return (
                 <div className="container container-document">
@@ -49,7 +48,6 @@ class DocumentPanel extends Component {
                   </div>
                   </div>
                 </div>
-
         );
     }
 };

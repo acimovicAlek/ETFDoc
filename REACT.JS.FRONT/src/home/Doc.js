@@ -10,13 +10,11 @@ class Doc extends Component{
 
     render(){
         return(
-            
-            <a className="document-wrapper">
-            <div className="document-box">
-              <span className="glyphicon glyphicon-file glyphicon-list-alt"></span><br></br><br></br>{this.props.doc.name}
-            </div>
+            <a className="document-wrapper" href={'document/'+this.props.doc.id}>
+                <div className="document-box">
+                <span className="glyphicon glyphicon-file glyphicon-list-alt"></span><br></br><br></br>{this.props.doc.name}
+                </div>
             </a>
-          
         );
     }
 }

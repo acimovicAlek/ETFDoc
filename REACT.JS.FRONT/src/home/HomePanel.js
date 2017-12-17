@@ -1,88 +1,96 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
 import DocumentPanel from './DocumentPanel';
+
+const protocol = window.location.protocol;
+const hostname = window.location.hostname;
 
 class HomePanel extends Component {
 
     constructor () {
         super();
         this.state = {
-          title:'Public Files'
+          title: 'Public Files',
+          user: null
         };
 
         this.createFile = this.createFile.bind(this);
+        this.openPublic = this.openPublic.bind(this);
+        this.openPrivate = this.openPrivate.bind(this);
     }
 
-    openPublic=()=>{
-      this.setState({
-        title: 'Public Files'
-      });
+    componentWillMount() {
+      // Get the user data
+      let userinfo = jwtDecode(sessionStorage.getItem('token'));
+      let email = userinfo.sub;
+
+      let data = null;
+
+      axios.get(protocol+'://'+hostname+':8080/account/getbyemail?email='+email, { })
+      .then(function(res) {
+          this.setState({user: res.data.id});
+      }.bind(this))   
+      .catch(function(error) {
+          console.log(error.response);
+      }.bind(this));
     }
 
-    openPrivate=()=>{
-      this.setState({
-        title: 'Private Files'
-      });
+    // Otvaranje public i private foldera
+    openPublic() {
+      // Kod za izlistavanje public foldera
+      // Koristiti axios package 
     }
 
+    openPrivate() {
+      // Kod za izlistavanje private dokumenata
+      // Koristiti this.state.id za id usera ili e-mail adresu, zavisi kako bude na backendu napravljeno
+      // Koristiti također axios
+    }
+
+    // Kod za kreiranje novog filea
+    // Ovo se samo odnosi za tekstualni file
     createFile() {
-      window.location = "document/17"; 
-    }
-
-   /* createFile() {
-      let user = {
-        id: sessionStorage.getItem('id')
-      }
-
-      let file = {
+      axios.post('http://'+hostname+':8080/document/create', {
         name: '',
-        content: '',
-        creator: user.id
-      }
-
-      let user_permissions = {
-        c: 1,
-        r: 1,
-        u: 1,
-        d: 1
-      }
-
-      axios.post('http://localhost:8080/document/create', {
-        name: '',
-        owner: user.id,
+        owner: this.state.user,
         privateFlag: true, // ovo stavlja da je uvijek private, jbg
-        folder: null // Nezz šta ću s folderima trneutno ovo je quick fix
+        folder: 0 // hajmo probat ovo prepraviti da ne postoji više? potrebno shendlati dalje backendu ko god ovo bude radio
       })
       .then(this.handleCreateSuccess.bind(this))
       .catch(this.handleCreateError.bind(this)); 
     }
 
+    // Uspješno kreiranje => dodjeljivanje svih mogućih privilegija
+    // ono nije mi baš jasan razlika između write i update na backendu al haj
+    // Uglavnom, potrebno je da API vraća json objekat odakel će se uuzimati document i redirektiati se dalje na njega 
     handleCreateSuccess(response) {
-      let user = {
-        id: sessionStorage.getItem('id')
-      }
-
-      axios.post('http://localhost:8080/privileges/create', {
-        account: user,
+      axios.post('http://'+hostname+':8080/privileges/create', {
+        account: this.state.user,
         document: response.data.id,
         read: true,
-        wirte: true,
+        write: true,
         update: true
       })
       .then(function(res) {
-         window.location = '/document/' + res.data.document;
+          window.location = '/document/' + res.data.document;
       }.bind(this))
-      .catc(function(response) {
+      .catch(function(response) {
         alert("Something went wrong while creating privliges.");
       }.bind(this));
     }
 
+    // Hendlanje neuspjelog pokušpaja kreiranja dokumenta
     handleCreateError(error) {
       alert("Something went wrong while creating the Document.");
-    } */
+    } 
+
+    // To Be Developed
+    // Upload dokumenta (blob)
 
     render () {
+
         return (
             <section id="cover" className="cover-fix">
                 <div className="container container-home">
@@ -95,6 +103,13 @@ class HomePanel extends Component {
                           <span className="glyphicon glyphicon-btn glyphicon-list-alt"></span><br></br>New text file
                         </button>
                       </div>
+
+                      <div className="add-file-wrapper" style={{marginTop: "-15px"}}>
+                        <button className="btn btn-primary add-file-btn" onClick={this.createFolder}>
+                          <span className="glyphicon glyphicon-btn glyphicon-folder-open"></span><br></br>New folder
+                        </button>
+                      </div>
+
                       <div className="menu-list">
                         <ul id="menu-content" className="menu-content collapse out">
                           <li onClick={this.openPublic}>
@@ -109,11 +124,13 @@ class HomePanel extends Component {
                           </li>
                         </ul>
                      </div>
+                     
                      </div>
                     </div>
                     <div className="col-md-10 col-sm-9 col-xs-7 home-col">
                       <h1 className="title">{this.state.title}</h1>
                       <DocumentPanel />
+                        />
                     </div>
                    </div>
                 </div>

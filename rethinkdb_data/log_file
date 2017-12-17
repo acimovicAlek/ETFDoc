@@ -1,0 +1,20 @@
+2017-12-16T13:24:26.852795000 40.051876s notice: Recursively removing directory /Users/ohrinator/Apps/ETFDoc/rethinkdb_data/tmp
+2017-12-16T13:24:26.858021000 40.057109s notice: Initializing directory /Users/ohrinator/Apps/ETFDoc/rethinkdb_data
+2017-12-16T13:24:26.858449000 40.057529s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/Users/ohrinator/Apps/ETFDoc/rethinkdb_data' did not already exist or is empty.)
+2017-12-16T13:24:26.858952000 40.058032s notice: Running rethinkdb 2.3.6 (CLANG 8.1.0 (clang-802.0.42))...
+2017-12-16T13:24:26.874664000 40.073744s notice: Running on Darwin 16.3.0 x86_64
+2017-12-16T13:24:26.874726000 40.073805s notice: Loading data from directory /Users/ohrinator/Apps/ETFDoc/rethinkdb_data
+2017-12-16T13:24:27.036436000 40.235515s info: Automatically using cache size of 100 MB
+2017-12-16T13:24:27.036448000 40.235528s warn: Cache size does not leave much memory for server and query overhead (available memory: 885 MB).
+2017-12-16T13:24:27.036456000 40.235536s warn: Cache size is very low and may impact performance.
+2017-12-16T13:24:27.038813000 40.237893s notice: Listening for intracluster connections on port 29015
+2017-12-16T13:24:27.045761000 40.244840s notice: Listening for client driver connections on port 28015
+2017-12-16T13:24:27.046024000 40.245104s notice: Listening for administrative HTTP connections on port 8100
+2017-12-16T13:24:27.046028000 40.245107s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2017-12-16T13:24:27.046034000 40.245113s notice: Listening on driver addresses: 127.0.0.1, ::1
+2017-12-16T13:24:27.046037000 40.245116s notice: Listening on http addresses: 127.0.0.1, ::1
+2017-12-16T13:24:27.046042000 40.245121s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2017-12-16T13:24:27.046048000 40.245127s notice: Server ready, "Mirzas_MacBook_Air_local_vo2" ea294486-1ab9-4916-ab1b-b4bada23143d
+2017-12-17T00:07:47.440821000 12847.676168s info: Table 920f642e-7955-4566-b1dc-8c928f9add69: Starting a new Raft election for term 1.
+2017-12-17T00:07:47.442539000 12847.677882s info: Table 920f642e-7955-4566-b1dc-8c928f9add69: Added replica on this server.
+2017-12-17T00:07:47.470030000 12847.705373s info: Table 920f642e-7955-4566-b1dc-8c928f9add69: This server is Raft leader for term 1. Latest log index is 0.
