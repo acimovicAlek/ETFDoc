@@ -23,8 +23,8 @@ public interface IDocumentRepository extends PagingAndSortingRepository<Document
 
     List<Document> findAllByFolderIsNullAndPrivateFlagIsFalse();
 
-    @Query("SELECT DISTINCT d FROM docmument d, privileges p WHERE d.owner_id = ?2 OR " +
+   /* @Query("SELECT DISTINCT d FROM docmument d, privileges p WHERE d.owner_id = ?2 OR " +
             "p.account_id = ?2 OR d.prvate_flag = TRUE AND d.name LIKE  ?1")
-    List<Document> findAllByKeywordAndCollaborator(String keyword, Long colabID);
+    List<Document> findAllByKeywordAndCollaborator(String keyword, Long colabID);*/
 
 }

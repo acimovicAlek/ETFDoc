@@ -25,6 +25,10 @@ class DocumentPanel extends Component {
 
 
     componentDidMount() {
+
+      let userinfo = jwtDecode(sessionStorage.getItem('token'));
+      let email = userinfo.sub;
+
       console.log(this.props.publicFiles);
       if (this.props.publicFiles==1){
         axios.get('http://localhost:8080/document/public', { })
@@ -32,8 +36,7 @@ class DocumentPanel extends Component {
         .catch(this.handleError.bind(this));
       }
       else if (this.props.publicFiles==0) {
-          axios.get('http://localhost:8080/document/private?authentication='+sessionStorage.getItem('token'), {
-          public:true })
+          axios.get('http://localhost:8080/document/private?email='+email, {})
           .then(this.handleSuccess.bind(this))
           .catch(this.handleError.bind(this));
       }
