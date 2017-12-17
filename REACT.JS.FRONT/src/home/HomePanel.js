@@ -29,11 +29,12 @@ class HomePanel extends Component {
 
       let data = null;
 
-      axios.get(protocol+'://'+hostname+':8080/account/getbyemail?email='+email, { })
+      axios.get('http://'+hostname+':8080/account/getbyemail?email='+email, { })
       .then(function(res) {
           this.setState({user: res.data.id});
       }.bind(this))
       .catch(function(error) {
+          console.log("palo");
           console.log(error.response);
       }.bind(this));
     }
@@ -61,11 +62,13 @@ class HomePanel extends Component {
     // Kod za kreiranje novog filea
     // Ovo se samo odnosi za tekstualni file
     createFile() {
+      let documentName = prompt("Setup the document name");
+
       axios.post('http://'+hostname+':8080/document/create', {
-        name: '',
+        name: documentName,
         owner: this.state.user,
-        privateFlag: true, // ovo stavlja da je uvijek private, jbg
-        folder: 0 // hajmo probat ovo prepraviti da ne postoji više? potrebno shendlati dalje backendu ko god ovo bude radio
+        private_flag: 1, // ovo stavlja da je uvijek private, jbg
+        native_flag: 1 // hajmo probat ovo prepraviti da ne postoji više? potrebno shendlati dalje backendu ko god ovo bude radio
       })
       .then(this.handleCreateSuccess.bind(this))
       .catch(this.handleCreateError.bind(this));
@@ -83,7 +86,7 @@ class HomePanel extends Component {
         delete: true
       })
       .then(function(res) {
-          window.location = '/document/' + res.data.document;
+          window.location = '/document/' + res.data.document.id;
       }.bind(this))
       .catch(function(response) {
         alert("Something went wrong while creating privliges.");
@@ -92,6 +95,7 @@ class HomePanel extends Component {
 
     // Hendlanje neuspjelog pokušpaja kreiranja dokumenta
     handleCreateError(error) {
+      console.log(error.response);
       alert("Something went wrong while creating the Document.");
     }
 

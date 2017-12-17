@@ -91,7 +91,7 @@ class DocumentPanel extends Component {
                     </div>
                   </div>
                   <div className="row document-row">
-                    <div className="col-md-2 col-sm-6 col-xs-12 document-col">
+                    <div>
                       {elements}
                     </div>
                   </div>

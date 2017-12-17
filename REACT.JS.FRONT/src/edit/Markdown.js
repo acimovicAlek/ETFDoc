@@ -113,9 +113,9 @@ class Markdown extends Component {
     // Delete file 
     deleteDocument() {
       if(window.confirm("Do you want to delete this document?")) {
-        /*axios.delete('http://'+hostname+':8080/document/delete/'+this.state.document, {})
+        axios.delete('http://'+hostname+':8080/document/delete/'+this.state.document, {})
         .then(this.handleDeleteSuccess.bind(this))
-        .catch(this.handleDeleteError.bind(this));*/
+        .catch(this.handleDeleteError.bind(this));
       }
     }
 
