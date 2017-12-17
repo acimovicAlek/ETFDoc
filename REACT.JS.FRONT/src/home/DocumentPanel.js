@@ -5,8 +5,8 @@ import Doc from './Doc';
 
 class DocumentPanel extends Component {
 
-    constructor () {
-        super();
+    constructor (props) {
+        super(props);
 
         this.state = {
           email: null,
@@ -20,21 +20,38 @@ class DocumentPanel extends Component {
     componentWillMount() {
        let userinfo = jwtDecode(sessionStorage.getItem('token'));
        this.setState({email: userinfo.sub});
+
     }
 
+
     componentDidMount() {
-      axios.get('http://localhost:8080/document/getByRootAndOwner?email=' + this.state.email, { })
-      .then(this.handleSuccess.bind(this))
-      .catch(this.handleError.bind(this));
+      console.log(this.props.publicFiles);
+      if (this.props.publicFiles==1){
+        axios.get('http://localhost:8080/document/public', { })
+        .then(this.handleSuccess.bind(this))
+        .catch(this.handleError.bind(this));
+      }
+      else if (this.props.publicFiles==0) {
+          axios.get('http://localhost:8080/document/private?authentication='+sessionStorage.getItem('token'), {
+          public:true })
+          .then(this.handleSuccess.bind(this))
+          .catch(this.handleError.bind(this));
+      }
     }
+
+    componentWillRecieveProps(nextProps){
+      console.log(nextProps);
+    }
+
 
     handleSuccess(response) {
       this.setState({documents:response.data});
       console.log(response);
 
-    } 
+    }
 
     handleError(error) {
+      console.log(error.response);
       alert("Something went wrong!");
     }
 
