@@ -37,14 +37,8 @@ public class DocumentService {
         Document newDocument = new Document(
                 documentVM.getName(),
                 account,
-<<<<<<< HEAD
                 documentVM.getPrivateFlag()
         );
-=======
-                documentVM.getPrivateFlag(),
-                documentVM.getNative_flag()
-                );
->>>>>>> 8aa51ab1ab478fa07a7b89d87d4a183cb429874d
 
         Document createdDocument = documentRepository.save(newDocument);
 

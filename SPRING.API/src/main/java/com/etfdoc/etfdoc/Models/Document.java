@@ -35,18 +35,10 @@ public class Document implements Serializable {
 
     public Document() {}
 
-<<<<<<< HEAD
     public Document(String name, Account owner, Boolean private_flag) {
         this.name = name;
         this.owner = owner;
         this.privateFlag = private_flag;
-=======
-    public Document(String name, Account owner, Boolean private_flag, Boolean native_flag) {
-        this.name = name;
-        this.owner = owner;
-        this.privateFlag = private_flag;
-        this.native_flag = native_flag;
->>>>>>> 8aa51ab1ab478fa07a7b89d87d4a183cb429874d
     }
 
     public Long getId() {
