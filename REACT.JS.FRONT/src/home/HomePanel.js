@@ -43,7 +43,7 @@ class HomePanel extends Component {
       // Kod za izlistavanje public foldera
       // Koristiti axios package
       this.setState({title:' Public files '});
-      this.setState({public:1});
+      this.setState({public:1,});
 
     }
 
@@ -52,7 +52,10 @@ class HomePanel extends Component {
       // Koristiti this.state.id za id usera ili e-mail adresu, zavisi kako bude na backendu napravljeno
       // Koristiti također axios
       this.setState({title:' Private files '});
-      this.setState({public:0});
+      this.setState({
+        public:0,
+      });
+
     }
 
     // Kod za kreiranje novog filea
@@ -98,48 +101,59 @@ class HomePanel extends Component {
     render () {
         return (
             <section id="cover" className="cover-fix">
-                <div className="container container-home">
-                    <div className="plain-panel">
-                    <div className="row home-row">
-                    <div className="col-md-2 col-sm-3 col-xs-5 home-col">
-                    <div className="nav-side-menu">
-                      <div className="add-file-wrapper">
-                        <button className="btn btn-primary add-file-btn" onClick={this.createFile}>
-                          <span className="glyphicon glyphicon-btn glyphicon-list-alt"></span><br></br>New text file
-                        </button>
-                      </div>
 
-                      <div className="add-file-wrapper" style={{marginTop: "-15px"}}>
-                        <button className="btn btn-primary add-file-btn" onClick={this.uploadFile}>
-                          <span className="glyphicon glyphicon-btn glyphicon-folder-open"></span><br></br>Upload file
-                        </button>
-                      </div>
+                    <div className="container container-home">
+                        <div className="plain-panel">
+                        <div className="row home-row">
+                        <div className="col-md-2 col-sm-3 col-xs-5 home-col">
+                        <div className="nav-side-menu">
+                          <div className="add-file-wrapper">
+                            <button className="btn btn-primary add-file-btn" onClick={this.createFile}>
+                              <span className="glyphicon glyphicon-btn glyphicon-list-alt"></span><br></br>New text file
+                            </button>
+                          </div>
 
-                      <div className="menu-list">
-                        <ul id="menu-content" className="menu-content collapse out">
-                          <li onClick={this.openPublic}>
-                            <a href="#">
-                              <i className="fa fa-dashboard fa-lg"></i> Public Files
-                            </a>
-                          </li>
-                          <li onClick={this.openPrivate}>
-                            <a href="#">
-                              <i className="fa fa-dashboard fa-lg"></i> My Files
-                            </a>
-                          </li>
-                        </ul>
-                     </div>
+                          <div className="add-file-wrapper" style={{marginTop: "-15px"}}>
+                            <button className="btn btn-primary add-file-btn" onClick={this.uploadFile}>
+                              <span className="glyphicon glyphicon-btn glyphicon-folder-open"></span><br></br>Upload file
+                            </button>
+                          </div>
 
-                     </div>
+                          <div className="menu-list">
+                            <ul id="menu-content" className="menu-content collapse out">
+                              <li onClick={this.openPublic}>
+                                <a href="#">
+                                  <i className="fa fa-dashboard fa-lg"></i> Public Files
+                                </a>
+                              </li>
+                              <li onClick={this.openPrivate}>
+                                <a href="#">
+                                  <i className="fa fa-dashboard fa-lg"></i> My Files
+                                </a>
+                              </li>
+                            </ul>
+                         </div>
+
+                         </div>
+                        </div>
+                        <div className="col-md-10 col-sm-9 col-xs-7 home-col">
+                          <h1 className="title">{this.state.title}</h1>
+                          {
+                            this.state.public
+                            &&
+                            <DocumentPanel publicFiles={true} />
+                          }
+                          {
+                            !this.state.public
+                            &&
+                            <DocumentPanel publicFiles={false} />
+                          }
+                        </div>
+                       </div>
                     </div>
-                    <div className="col-md-10 col-sm-9 col-xs-7 home-col">
-                      <h1 className="title">{this.state.title}</h1>
-                      <DocumentPanel publicFiles={this.state.public}/>
-
                     </div>
-                   </div>
-                </div>
-                </div>
+
+                }
             </section>
         );
     }
