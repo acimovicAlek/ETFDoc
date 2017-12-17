@@ -88,7 +88,7 @@ public class DocumentController {
         }
     }
 
-    @RequestMapping(value = "private", method = RequestMethod.GET)
+    @RequestMapping(value = "/private", method = RequestMethod.GET)
     public ResponseEntity getAllPrivate(@RequestBody Principal principal){
 
         try{
@@ -97,6 +97,17 @@ public class DocumentController {
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getLocalizedMessage());
         }
 
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public ResponseEntity delete(@RequestParam Long id)
+    {
+        try{
+            if(documentService.deleteDocument(id)) return ResponseEntity.status(HttpStatus.OK).body("");
+            else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("");
+        }catch (ServiceException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getLocalizedMessage());
+        }
     }
 
 

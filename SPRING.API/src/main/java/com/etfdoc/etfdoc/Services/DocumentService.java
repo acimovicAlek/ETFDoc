@@ -9,6 +9,7 @@ import com.etfdoc.etfdoc.Repositories.IDocumentRepository;
 import com.etfdoc.etfdoc.Repositories.IFolderRepository;
 import com.etfdoc.etfdoc.Repositories.IPrivilegesRepository;
 import com.etfdoc.etfdoc.ViewModels.DocumentVM;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,9 +50,11 @@ public class DocumentService {
         return createdDocument;
     }
 
-    public void deleteDocument(Long documentID){
+    public Boolean deleteDocument(Long documentID){
 
         documentRepository.delete(documentID);
+
+        return (null != documentRepository.findById(documentID));
 
     }
 
