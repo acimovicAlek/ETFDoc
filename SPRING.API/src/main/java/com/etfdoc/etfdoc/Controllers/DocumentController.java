@@ -96,11 +96,11 @@ public class DocumentController {
         }
     }*/
 
-    @RequestMapping(value = "/upload/{user}", method = RequestMethod.POST)
-    public ResponseEntity uplaoad(MultipartHttpServletRequest request, @PathVariable String user){
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public ResponseEntity uplaoad(MultipartHttpServletRequest request, @RequestParam String email){
 
         DocumentVM documentVM = new DocumentVM();
-        documentVM.setOwner(user);
+        documentVM.setOwner(email);
         documentVM.setNative_flag(false);
 
         try{
