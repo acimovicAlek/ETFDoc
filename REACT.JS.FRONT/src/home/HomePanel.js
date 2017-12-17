@@ -13,7 +13,8 @@ class HomePanel extends Component {
         super();
         this.state = {
           title: 'Public Files',
-          user: null
+          user: null,
+          public:1,
         };
 
         this.createFile = this.createFile.bind(this);
@@ -31,7 +32,7 @@ class HomePanel extends Component {
       axios.get(protocol+'://'+hostname+':8080/account/getbyemail?email='+email, { })
       .then(function(res) {
           this.setState({user: res.data.id});
-      }.bind(this))   
+      }.bind(this))
       .catch(function(error) {
           console.log(error.response);
       }.bind(this));
@@ -40,13 +41,18 @@ class HomePanel extends Component {
     // Otvaranje public i private foldera
     openPublic() {
       // Kod za izlistavanje public foldera
-      // Koristiti axios package 
+      // Koristiti axios package
+      this.setState({title:' Public files '});
+      this.setState({public:1});
+
     }
 
     openPrivate() {
       // Kod za izlistavanje private dokumenata
       // Koristiti this.state.id za id usera ili e-mail adresu, zavisi kako bude na backendu napravljeno
       // Koristiti također axios
+      this.setState({title:' Private files '});
+      this.setState({public:0});
     }
 
     // Kod za kreiranje novog filea
@@ -59,12 +65,12 @@ class HomePanel extends Component {
         folder: 0 // hajmo probat ovo prepraviti da ne postoji više? potrebno shendlati dalje backendu ko god ovo bude radio
       })
       .then(this.handleCreateSuccess.bind(this))
-      .catch(this.handleCreateError.bind(this)); 
+      .catch(this.handleCreateError.bind(this));
     }
 
     // Uspješno kreiranje => dodjeljivanje svih mogućih privilegija
     // ono nije mi baš jasan razlika između write i update na backendu al haj
-    // Uglavnom, potrebno je da API vraća json objekat odakel će se uuzimati document i redirektiati se dalje na njega 
+    // Uglavnom, potrebno je da API vraća json objekat odakel će se uuzimati document i redirektiati se dalje na njega
     handleCreateSuccess(response) {
       axios.post('http://'+hostname+':8080/privileges/create', {
         account: this.state.user,
@@ -84,13 +90,12 @@ class HomePanel extends Component {
     // Hendlanje neuspjelog pokušpaja kreiranja dokumenta
     handleCreateError(error) {
       alert("Something went wrong while creating the Document.");
-    } 
+    }
 
     // To Be Developed
     // Upload dokumenta (blob)
 
     render () {
-
         return (
             <section id="cover" className="cover-fix">
                 <div className="container container-home">
@@ -105,8 +110,8 @@ class HomePanel extends Component {
                       </div>
 
                       <div className="add-file-wrapper" style={{marginTop: "-15px"}}>
-                        <button className="btn btn-primary add-file-btn" onClick={this.createFolder}>
-                          <span className="glyphicon glyphicon-btn glyphicon-folder-open"></span><br></br>New folder
+                        <button className="btn btn-primary add-file-btn" onClick={this.uploadFile}>
+                          <span className="glyphicon glyphicon-btn glyphicon-folder-open"></span><br></br>Upload file
                         </button>
                       </div>
 
@@ -124,13 +129,13 @@ class HomePanel extends Component {
                           </li>
                         </ul>
                      </div>
-                     
+
                      </div>
                     </div>
                     <div className="col-md-10 col-sm-9 col-xs-7 home-col">
                       <h1 className="title">{this.state.title}</h1>
-                      <DocumentPanel />
-                        />
+                      <DocumentPanel publicFiles={this.state.public}/>
+
                     </div>
                    </div>
                 </div>

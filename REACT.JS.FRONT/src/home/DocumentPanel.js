@@ -5,8 +5,8 @@ import Doc from './Doc';
 
 class DocumentPanel extends Component {
 
-    constructor () {
-        super();
+    constructor (props) {
+        super(props);
 
         this.state = {
           email: null,
@@ -20,18 +20,23 @@ class DocumentPanel extends Component {
     }
 
     componentDidMount() {
-      axios.get('http://localhost:8080/document/getByRootAndOwner?email=' + this.state.email, { })
-      .then(this.handleSuccess.bind(this))
-      .catch(this.handleError.bind(this));
+      if (this.props.publicFiles==1){
+        axios.get('http://localhost:8080/document/public', { })
+        .then(this.handleSuccess.bind(this))
+        .catch(this.handleError.bind(this));
+    }
+    else if (this.props.publicFiles==0) {
+        axios.get('http://localhost:8080/document/private', { })
+        .then(this.handleSuccess.bind(this))
+        .catch(this.handleError.bind(this));
+    }
     }
 
     handleSuccess(response) {
-
-
       this.setState({documents:response.data});
       console.log(response);
 
-    } 
+    }
 
     handleError(error) {
 
@@ -44,6 +49,7 @@ class DocumentPanel extends Component {
                 <div className="container container-document">
                   <div className="row document-row">
                   <div className="col-md-2 col-sm-6 col-xs-12 document-col">
+
                     {elements}
                   </div>
                   </div>
