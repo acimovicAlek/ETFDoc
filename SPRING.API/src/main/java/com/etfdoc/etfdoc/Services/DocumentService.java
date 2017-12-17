@@ -4,10 +4,7 @@ import com.etfdoc.etfdoc.Models.Account;
 import com.etfdoc.etfdoc.Models.Document;
 import com.etfdoc.etfdoc.Models.Folder;
 import com.etfdoc.etfdoc.Models.Privileges;
-import com.etfdoc.etfdoc.Repositories.IAccountRepository;
-import com.etfdoc.etfdoc.Repositories.IDocumentRepository;
-import com.etfdoc.etfdoc.Repositories.IFolderRepository;
-import com.etfdoc.etfdoc.Repositories.IPrivilegesRepository;
+import com.etfdoc.etfdoc.Repositories.*;
 import com.etfdoc.etfdoc.ViewModels.DocumentVM;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +27,9 @@ public class DocumentService {
     @Autowired
     private IPrivilegesRepository privilegesRepository;
 
+    @Autowired
+    private IDocumentBlobRepository documentBlobRepository;
+
     public Document createDocument(DocumentVM documentVM){
 
         Account account = accountRepository.getAccountByEmail(documentVM.getOwner());
@@ -42,8 +42,8 @@ public class DocumentService {
                 documentVM.getName(),
                 account,
                 documentVM.getPrivateFlag(),
-                parent
-        );
+                documentVM.getNative_flag()
+                );
 
         Document createdDocument = documentRepository.save(newDocument);
 
@@ -52,36 +52,15 @@ public class DocumentService {
 
     public Boolean deleteDocument(Long documentID){
 
+        Document document = documentRepository.findById(documentID);
+        if(!document.getNative_flag()){
+            documentBlobRepository.deleteByDocumentId(documentID);
+        }
+
         documentRepository.delete(documentID);
 
         return (null != documentRepository.findById(documentID));
 
-    }
-
-    public List<Document> getAllByOwnerAndRoot(String email){
-
-        Account owner = accountRepository.getAccountByEmail(email);
-
-        if(owner != null) return documentRepository.findAllByOwnerAndFolderIsNull(owner);
-
-        return null;
-
-    }
-
-    public List<Document> getAllByOwnerAndFolder(String email, Long folderID){
-
-        Account owner = accountRepository.getAccountByEmail(email);
-
-        Folder folder = folderRepository.getById(folderID);
-
-        if(owner != null && folder != null) return documentRepository.findAllByOwnerAndFolder(owner, folder);
-
-        return null;
-
-    }
-
-    public List<Document> getAllRootAndPublic(){
-        return documentRepository.findAllByFolderIsNullAndPrivateFlagIsFalse();
     }
 
     public List<Document> getAllRoot(){
@@ -117,7 +96,9 @@ public class DocumentService {
 
     }
 
-   /* public List<Document> findByKeywordAndColobarator(String keyword, String email){
+
+    /*public List<Document> findByKeywordAndColobarator(String keyword, String email){
+
 
         Account owner = accountRepository.getAccountByEmail(email);
 

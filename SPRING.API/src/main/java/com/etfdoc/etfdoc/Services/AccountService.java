@@ -22,17 +22,17 @@ public class AccountService {
     @Autowired
     private IRoleRepository roleRepository;
 
-    public AccountVM getAccountById(Long id){
+    public Account getAccountById(Long id){
 
         Account account = accountRepository.getAccountById(id);
-        return  new AccountVM(account);
+        return  account;
 
     }
 
-    public AccountVM getAccountByEmail(String email){
+    public Account getAccountByEmail(String email){
 
         Account account = accountRepository.getAccountByEmail(email);
-        return  new AccountVM(account);
+        return  account;
 
     }
 
