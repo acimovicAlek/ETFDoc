@@ -89,7 +89,7 @@ public class DocumentController {
     }
 
     @RequestMapping(value = "/private", method = RequestMethod.GET)
-    public ResponseEntity getAllPrivate(@RequestBody Principal principal){
+    public ResponseEntity getAllPrivate(Principal principal){
 
         try{
             return ResponseEntity.status(HttpStatus.OK).body(documentService.getAllPrivate(principal.getName()));
