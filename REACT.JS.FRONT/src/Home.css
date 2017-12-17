@@ -148,3 +148,17 @@
   text-decoration: none!important;
   cursor: pointer;
 }
+
+.upload-modal{
+  height: 150px!important;
+  width: 400px!important;
+}
+
+.submit-upload{
+  margin: 25px;
+  margin-left: 0!important;
+  width: 150px!important;
+  font-size: 14px;
+  background-color: #3c4982!important;
+
+}
