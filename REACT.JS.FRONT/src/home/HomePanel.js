@@ -3,7 +3,7 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 
 import DocumentPanel from './DocumentPanel';
-
+import Upload from './Upload';
 const protocol = window.location.protocol;
 const hostname = window.location.hostname;
 
@@ -103,6 +103,7 @@ class HomePanel extends Component {
             <section id="cover" className="cover-fix">
 
                     <div className="container container-home">
+
                         <div className="plain-panel">
                         <div className="row home-row">
                         <div className="col-md-2 col-sm-3 col-xs-5 home-col">
@@ -113,11 +114,7 @@ class HomePanel extends Component {
                             </button>
                           </div>
 
-                          <div className="add-file-wrapper" style={{marginTop: "-15px"}}>
-                            <button className="btn btn-primary add-file-btn" onClick={this.uploadFile}>
-                              <span className="glyphicon glyphicon-btn glyphicon-folder-open"></span><br></br>Upload file
-                            </button>
-                          </div>
+                          <Upload />
 
                           <div className="menu-list">
                             <ul id="menu-content" className="menu-content collapse out">
@@ -131,6 +128,7 @@ class HomePanel extends Component {
                                   <i className="fa fa-dashboard fa-lg"></i> My Files
                                 </a>
                               </li>
+
                             </ul>
                          </div>
 
@@ -151,6 +149,7 @@ class HomePanel extends Component {
                         </div>
                        </div>
                     </div>
+
                     </div>
 
                 }
