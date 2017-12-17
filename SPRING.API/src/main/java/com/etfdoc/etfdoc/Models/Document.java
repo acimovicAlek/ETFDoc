@@ -16,7 +16,7 @@ public class Document implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    @ManyToOne(cascade = CascadeType.ALL, targetEntity = Account.class)
+    @ManyToOne(cascade = CascadeType.DETACH, targetEntity = Account.class)
     private  Account owner;
     private Boolean privateFlag = false;
     private Boolean native_flag = true;
@@ -38,6 +38,7 @@ public class Document implements Serializable {
         this.name = name;
         this.owner = owner;
         this.privateFlag = private_flag;
+        this.native_flag = true;
     }
 
     public Long getId() {
