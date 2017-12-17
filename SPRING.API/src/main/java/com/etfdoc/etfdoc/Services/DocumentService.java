@@ -34,15 +34,10 @@ public class DocumentService {
 
         Account account = accountRepository.getAccountByEmail(documentVM.getOwner());
 
-        Folder parent = null;
-
-        if(documentVM.getFolder() != -1) parent = folderRepository.getById(documentVM.getFolder());
-
         Document newDocument = new Document(
                 documentVM.getName(),
                 account,
-                documentVM.getPrivateFlag(),
-                parent
+                documentVM.getPrivateFlag()
         );
 
         Document createdDocument = documentRepository.save(newDocument);

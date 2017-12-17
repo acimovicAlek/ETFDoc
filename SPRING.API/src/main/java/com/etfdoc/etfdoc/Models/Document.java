@@ -24,11 +24,10 @@ public class Document implements Serializable {
 
     public Document() {}
 
-    public Document(String name, Account owner, Boolean private_flag, Folder folder) {
+    public Document(String name, Account owner, Boolean private_flag) {
         this.name = name;
         this.owner = owner;
         this.privateFlag = private_flag;
-        this.folder = folder;
     }
 
     public Long getId() {
