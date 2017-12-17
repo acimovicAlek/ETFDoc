@@ -37,6 +37,7 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/document/public").permitAll()
                 .antMatchers("/document/private").permitAll()
                 .antMatchers("/document/delete").permitAll()
+                .antMatchers("/document/upload/*").permitAll()
                 .antMatchers("/document/upload").permitAll()
                 .antMatchers("/document/download").permitAll()
                 .antMatchers(HttpMethod.POST,"/login").permitAll()
