@@ -1,6 +1,7 @@
 package com.etfdoc.etfdoc.Models;
 
 import com.sun.istack.internal.Nullable;
+import org.hibernate.annotations.Fetch;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -23,9 +24,6 @@ public class Document implements Serializable {
     @DateTimeFormat
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Date date;
-    @Lob
-    @Nullable
-    private Blob file;
 
     public Boolean getNative_flag() {
         return native_flag;
@@ -33,14 +31,6 @@ public class Document implements Serializable {
 
     public void setNative_flag(Boolean native_flag) {
         this.native_flag = native_flag;
-    }
-
-    public Blob getFile() {
-        return file;
-    }
-
-    public void setFile(Blob file) {
-        this.file = file;
     }
 
     public Document() {}

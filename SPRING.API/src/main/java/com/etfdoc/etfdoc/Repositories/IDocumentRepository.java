@@ -15,8 +15,8 @@ public interface IDocumentRepository extends PagingAndSortingRepository<Document
 
     Document findById(Long id);
 
-    @Query("SELECT DISTINCT d FROM docmument d, privileges p WHERE d.owner_id = ?2 OR " +
-            "p.account_id = ?2 OR d.prvate_flag = TRUE AND d.name LIKE  ?1")
-    List<Document> findAllByKeywordAndCollaborator(String keyword, Long colabID);
+    /*@Query("SELECT DISTINCT d FROM Docmument d, Privileges p WHERE d.owner.id = ?2 OR " +
+            "p.account.id = ?2 OR d.private_flag = TRUE AND d.name LIKE  ?1")
+    List<Document> findAllByKeywordAndCollaborator(String keyword, Long colabID);*/
 
 }

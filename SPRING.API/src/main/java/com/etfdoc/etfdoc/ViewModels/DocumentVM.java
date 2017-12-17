@@ -17,7 +17,14 @@ public class DocumentVM {
         this.native_flag = native_flag;
     }
 
-    private Boolean native_flag;
+    public DocumentVM(String name, String owner, Boolean privateFlag) {
+        this.name = name;
+        this.owner = owner;
+        this.privateFlag = privateFlag;
+        this.native_flag = true;
+    }
+
+    private Boolean native_flag = true;
 
     public Boolean getPrivateFlag() {
         return privateFlag;

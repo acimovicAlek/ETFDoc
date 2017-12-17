@@ -1,16 +1,26 @@
 package com.etfdoc.etfdoc.Controllers;
 
+import com.etfdoc.etfdoc.Models.Account;
+import com.etfdoc.etfdoc.Models.Document;
+import com.etfdoc.etfdoc.Models.DocumentBlob;
+import com.etfdoc.etfdoc.Services.AccountService;
+import com.etfdoc.etfdoc.Services.DocumentBlobService;
 import com.etfdoc.etfdoc.Services.DocumentService;
 import com.etfdoc.etfdoc.ViewModels.DocumentVM;
 import com.etfdoc.etfdoc.ViewModels.FolderVM;
 import org.hibernate.service.Service;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.security.Principal;
+import java.util.Iterator;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -18,11 +28,18 @@ import java.security.Principal;
 public class DocumentController {
 
     private DocumentService documentService;
+    private AccountService accountService;
+    private DocumentBlobService documentBlobService;
 
     @Autowired
     public void setDocumentService(DocumentService documentService){
         this.documentService = documentService;
     }
+    @Autowired
+    public void setAccountService(AccountService accountService) {this.accountService = accountService; }
+    @Autowired
+    public void setDocumentBlobService(DocumentBlobService documentBlobService) { this.documentBlobService = documentBlobService; }
+
 
     @RequestMapping(value = "/create", method = RequestMethod.POST )
     public ResponseEntity createFolder(@RequestBody DocumentVM documentVM)
@@ -37,47 +54,7 @@ public class DocumentController {
         }
     }
 
-    @RequestMapping(value = "/getByRootAndOwner", method = RequestMethod.GET)
-    public ResponseEntity getDocumentsByOwnerAndRoot(@RequestParam String email){
 
-        try{
-
-            return ResponseEntity.status(HttpStatus.OK).
-                    body(documentService.getAllByOwnerAndRoot(email));
-
-        }catch (ServiceException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
-                    body(e.getLocalizedMessage());
-        }
-    }
-
-    @RequestMapping(value = "/getByOwnerAndFolder", method = RequestMethod.GET)
-    public ResponseEntity getFoldersByParent(@RequestParam String email, Long folderID){
-
-        try{
-
-            return ResponseEntity.status(HttpStatus.OK).
-                    body(documentService.getAllByOwnerAndFolder(email,folderID));
-
-        }catch (ServiceException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
-                    body(e.getLocalizedMessage());
-        }
-    }
-
-    @RequestMapping(value = "/getByRootAndPublic", method = RequestMethod.GET)
-    public ResponseEntity getRootAndPublic(){
-
-        try{
-
-            return ResponseEntity.status(HttpStatus.OK).
-                    body(documentService.getAllRootAndPublic());
-
-        }catch (ServiceException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
-                    body(e.getLocalizedMessage());
-        }
-    }
 
     @RequestMapping(value = "/public", method = RequestMethod.GET)
     public ResponseEntity getAllPublic(){
@@ -110,13 +87,78 @@ public class DocumentController {
         }
     }
 
-    @RequestMapping(value = "/getByKeywordAndCollaborator", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/getByKeywordAndCollaborator", method = RequestMethod.GET)
     public ResponseEntity getByKeywordAndCollaborator(@RequestParam String keyword, String email){
         try{
             return ResponseEntity.status(HttpStatus.OK).body(documentService.findByKeywordAndColobarator(keyword,email));
         }catch (ServiceException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getLocalizedMessage());
         }
+    }*/
+
+    @RequestMapping(value = "/upload/{user}", method = RequestMethod.POST)
+    public ResponseEntity uplaoad(MultipartHttpServletRequest request, @PathVariable String user){
+
+        DocumentVM documentVM = new DocumentVM();
+        documentVM.setOwner(user);
+        documentVM.setNative_flag(false);
+
+        try{
+            Iterator<String> itr =  request.getFileNames();
+
+            while(itr.hasNext()){
+                String uploadedFile = itr.next();
+                MultipartFile file = request.getFile(uploadedFile);
+                String fileType = file.getContentType();
+                String fileName = file.getOriginalFilename();
+                documentVM.setName(fileName);
+
+                Document document = documentService.createDocument(documentVM);
+
+                byte[] data = file.getBytes();
+
+                DocumentBlob newDoc = new DocumentBlob(
+                        data,
+                        fileType,
+                        document
+                );
+
+                documentBlobService.uploadDocument(newDoc);
+
+            }
+            return ResponseEntity.status(HttpStatus.OK).body("File uploaded!");
+
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getLocalizedMessage());
+        }
+
+    }
+
+    @RequestMapping(value = "/download", method = RequestMethod.GET)
+    public ResponseEntity download(@RequestParam Long id){
+        DocumentBlob file =documentBlobService.getByDocumentId(id);
+
+        if(file==null){
+            return new ResponseEntity<>("{}",HttpStatus.NOT_FOUND);
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.add("content-disposition", "attachment; filename=" + file.getName());
+
+        String primaryType,subType;
+        try {
+            primaryType = file.getFileType().split("/")[0];
+            subType = file.getFileType().split("/")[1];
+        }
+        catch (IndexOutOfBoundsException | NullPointerException ex) {
+            return new ResponseEntity<>("{}", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
+        headers.setContentType( new MediaType(primaryType, subType) );
+
+        return new ResponseEntity<>(file.getData(), headers, HttpStatus.OK);
     }
 
 }
