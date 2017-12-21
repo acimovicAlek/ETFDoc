@@ -33,7 +33,8 @@ public class DocumentService {
         Document newDocument = new Document(
                 documentVM.getName(),
                 account,
-                documentVM.getPrivateFlag()
+                documentVM.getPrivateFlag(),
+                documentVM.getNative_flag()
         );
 
         Document createdDocument = documentRepository.save(newDocument);
@@ -44,10 +45,17 @@ public class DocumentService {
     public Boolean deleteDocument(Long documentID){
 
         Document document = documentRepository.findById(documentID);
-        if(!document.getNative_flag()){
+        if(!document.getNativeFlag()){
             documentBlobRepository.deleteByDocumentId(documentID);
         }
 
+        List<Privileges> privileges = privilegesRepository.findAllByDocument_Id(documentID);
+        for (Privileges i:
+             privileges) {
+
+            privilegesRepository.delete(i);
+
+        }
         documentRepository.delete(documentID);
 
         return (null != documentRepository.findById(documentID));
@@ -88,13 +96,13 @@ public class DocumentService {
     }
 
 
-    /*public List<Document> findByKeywordAndColobarator(String keyword, String email){
+    public List<Document> findByKeywordAndColobarator(String keyword, String email){
 
 
         Account owner = accountRepository.getAccountByEmail(email);
 
         return documentRepository.findAllByKeywordAndCollaborator("%"+keyword+"%", owner.getId());
 
-    }*/
+    }
 
 }

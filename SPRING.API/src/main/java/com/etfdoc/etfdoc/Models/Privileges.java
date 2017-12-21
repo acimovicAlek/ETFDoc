@@ -1,6 +1,9 @@
 package com.etfdoc.etfdoc.Models;
 
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -10,13 +13,18 @@ public class Privileges implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL, targetEntity = Account.class)
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Account account;
-    @ManyToOne(cascade = CascadeType.ALL, targetEntity = Document.class)
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Document document;
     private Boolean read = false;
     private Boolean write = false;
     private Boolean update = false;
+
+    public Privileges() {
+    }
 
     public Privileges(Account account, Document document, Boolean read, Boolean write, Boolean update) {
         this.account = account;

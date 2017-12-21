@@ -6,7 +6,9 @@ import jwtDecode from 'jwt-decode';
 const protocol = window.location.protocol;
 const hostname = window.location.hostname;
 
-const socket = openSocket(protocol+'//'+hostname+':6400');
+const socket = openSocket(protocol+'//'+hostname+':6400');  
+
+var myCodeMirror;
 
 class Markdown extends Component {
 
@@ -37,11 +39,14 @@ class Markdown extends Component {
 
         socket.on("document",(res) => {
           console.log(res);
-          if(res.new_val.document === this.state.documetn && Number(res.new_val.user) != this.state.user){
+          if(res.new_val.document === this.state.document && Number(res.new_val.user) != this.state.user){
+            var pos = this.getCursor();
+            let dif = res.new_val.content.length - this.state.text.length;
             this.setState({
               text : res.new_val.content,
               name : res.new_val.name
             })
+            this.setCursor(pos+dif); 
           }
         });
     }
@@ -70,7 +75,28 @@ class Markdown extends Component {
         }.bind(this))   
         .catch(function(error) {
             console.log(error.response);
-        }.bind(this));   
+        }.bind(this));  
+    }
+
+    getCursor(){
+      var el = document.getElementById("editor");
+      var pos = 0;
+      if('selectionStart' in el) {
+          pos = el.selectionStart;
+      } else if('selection' in document) {
+          el.focus();
+          var Sel = document.selection.createRange();
+          var SelLength = document.selection.createRange().text.length;
+          Sel.moveStart('character', -el.value.length);
+          pos = Sel.text.length - SelLength;
+      }
+      return el.selectionStart;
+    }
+
+    setCursor(pos){
+      console.log(pos);
+      var el = document.getElementById("editor");
+      el.setSelectionRange(pos,pos);
     }
 
     handleSuccess(response) {
@@ -99,6 +125,7 @@ class Markdown extends Component {
 
     onTextChange(e) {
       this.setState({ text: e.target.value })
+
       var obj = {
           content: e.target.value,
           name: this.state.name,
@@ -189,13 +216,13 @@ class Markdown extends Component {
               <div className="container">
                 <div className="row">
                   <div className="col-md-8 col-sm-12 col-xs-12">
-                    <input type="text" name="name" value={this.state.name} onChangeCapture={this.onNameChange} className="naziv-dokumenta" placeholder="Enter document name..." />
+                    <input  type="text" name="name" value={this.state.name} onChangeCapture={this.onNameChange} className="naziv-dokumenta" placeholder="Enter document name..." />
                       <hr/>
                     <div className="markdown-editor-collaborators">
                       <ul>
                       </ul>
                     </div>
-                    <textarea className="ql-editor" name="text" value={this.state.text} onChangeCapture={this.onTextChange}></textarea>
+                    <textarea id="editor" ref="editor" className="ql-editor" name="text" value={this.state.text} onChangeCapture={this.onTextChange}></textarea>
                   </div>
                   <div className="col-md-4 col-sm-12 col-xs-12">
                     <div className="panel panel-default">
@@ -207,9 +234,9 @@ class Markdown extends Component {
                               <label for="email">E-mail:</label>
                               <input type="text" name="email" className="form-control" placeholder="Enter users e-mail" onChange={this.onPrivEmailChange} value={this.state.priv_email} />
                             </div>
-                            <label class="checkbox-inline"><input type="checkbox" name="read" onChange={(e) => this.onCheckboxChange(this.state.priv_read, 'read', e)} />Read</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="write" onChange={(e) => this.onCheckboxChange(this.state.priv_write, "write", e)} />Write</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="delete" onChange={(e) => this.onCheckboxChange(this.state.priv_delete, "delete", e)} />Delete</label>
+                            <label className="checkbox-inline"><input type="checkbox" name="read" onChange={(e) => this.onCheckboxChange(this.state.priv_read, 'read', e)} />Read</label>
+                            <label className="checkbox-inline"><input type="checkbox" name="write" onChange={(e) => this.onCheckboxChange(this.state.priv_write, "write", e)} />Write</label>
+                            <label className="checkbox-inline"><input type="checkbox" name="delete" onChange={(e) => this.onCheckboxChange(this.state.priv_delete, "delete", e)} />Delete</label>
 
                             <input type="submit" name="submit" value="Add collaborator" className="btn btn-primary" style={{width: "100%", padding: "15px 0", marginTop: "15px"}} onClick={this.grantPrivlieges}/>
                           </form> 

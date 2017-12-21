@@ -3,6 +3,9 @@ import axios,{post} from 'axios';
 import Modal from 'react-responsive-modal';
 import jwtDecode from 'jwt-decode';
 
+const protocol = window.location.protocol;
+const hostname = window.location.hostname;
+
 
 class Upload extends Component {
 
@@ -33,7 +36,7 @@ class Upload extends Component {
   }
 
   fileUpload(file){
-    const url = 'http://localhost:8080/document/upload?email='+this.state.email;
+    const url = protocol+'//'+hostname+':8080/document/upload?email='+this.state.email;
     const formData = new FormData();
     formData.append('file',file)
     const config = {

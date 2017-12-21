@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 
+const protocol = window.location.protocol;
+const hostname = window.location.hostname;
+
 class Form extends Component {
      // State constructor
     constructor () {
@@ -21,7 +24,7 @@ class Form extends Component {
 
         if(this.state.email && this.state.password) {
             if(this.state.email && this.state.password) {
-                axios.post('http://localhost:8080/login', {
+                axios.post(protocol+'//'+hostname+':8080/login', {
                     email: this.state.email,
                     password: this.state.password
                 })
@@ -40,7 +43,7 @@ class Form extends Component {
 
         let data = null;
 
-        axios.get('http://localhost:8080/account/getbyemail?email='+email, { })
+        axios.get(protocol+'//'+hostname+':8080/account/getbyemail?email='+email, { })
         .then(function(res) {
             console.log(res.data.id);
             sessionStorage.setItem('id', res.data.id);

@@ -3,6 +3,9 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import Doc from './Doc';
 
+const protocol = window.location.protocol;
+const hostname = window.location.hostname;
+
 class DocumentPanel extends Component {
 
     constructor (props) {
@@ -31,12 +34,12 @@ class DocumentPanel extends Component {
 
       console.log(this.props.publicFiles);
       if (this.props.publicFiles==1){
-        axios.get('http://localhost:8080/document/public', { })
+        axios.get(protocol+'//'+hostname+':8080/document/public', { })
         .then(this.handleSuccess.bind(this))
         .catch(this.handleError.bind(this));
       }
       else if (this.props.publicFiles==0) {
-          axios.get('http://localhost:8080/document/private?email='+email, {})
+          axios.get(protocol+'//'+hostname+':8080/document/private?email='+email, {})
           .then(this.handleSuccess.bind(this))
           .catch(this.handleError.bind(this));
       }
@@ -49,7 +52,6 @@ class DocumentPanel extends Component {
 
     handleSuccess(response) {
       this.setState({documents:response.data});
-      console.log(response);
 
     }
 
@@ -63,9 +65,9 @@ class DocumentPanel extends Component {
       // Setup the keyword
       this.setState({ keyword: e.target.value });
 
-      /*axios.get('http://localhost:8080/document/getByKeywordAndCollaborator?email=' + this.state.email + '&keyword=' + e.target.value, { })
+      axios.get('http://localhost:8080/document/getByKeywordAndCollaborator?email=' + this.state.email + '&keyword=' + e.target.value, { })
       .then(this.handleSearchSuccess.bind(this))
-      .catch(this.handleSearchError.bind(this));*/
+      .catch(this.handleSearchError.bind(this));
     }
 
     handleSearchSuccess(response) {

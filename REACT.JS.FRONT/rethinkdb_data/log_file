@@ -1,0 +1,37 @@
+2017-12-18T10:35:10.806495816 0.221195s notice: Recursively removing directory /home/infloop/Documents/ETFDoc/REACT.JS.FRONT/rethinkdb_data/tmp
+2017-12-18T10:35:10.874933760 0.289631s notice: Initializing directory /home/infloop/Documents/ETFDoc/REACT.JS.FRONT/rethinkdb_data
+2017-12-18T10:35:10.875049866 0.289746s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/home/infloop/Documents/ETFDoc/REACT.JS.FRONT/rethinkdb_data' did not already exist or is empty.)
+2017-12-18T10:35:10.875109624 0.289806s notice: Running rethinkdb 2.3.6~0xenial (GCC 5.3.1)...
+2017-12-18T10:35:10.894356611 0.309057s notice: Running on Linux 4.10.0-38-generic x86_64
+2017-12-18T10:35:10.894440068 0.309136s notice: Loading data from directory /home/infloop/Documents/ETFDoc/REACT.JS.FRONT/rethinkdb_data
+2017-12-18T10:35:11.267165110 0.681862s info: Automatically using cache size of 225 MB
+2017-12-18T10:35:11.302600767 0.717298s notice: Listening for intracluster connections on port 29015
+2017-12-18T10:35:11.348728633 0.763425s notice: Listening for client driver connections on port 28015
+2017-12-18T10:35:11.348878799 0.763575s notice: Listening for administrative HTTP connections on port 8888
+2017-12-18T10:35:11.348885917 0.763582s notice: Listening on cluster addresses: 127.0.0.1, 127.0.1.1, ::1
+2017-12-18T10:35:11.348888995 0.763585s notice: Listening on driver addresses: 127.0.0.1, 127.0.1.1, ::1
+2017-12-18T10:35:11.348892899 0.763589s notice: Listening on http addresses: 127.0.0.1, 127.0.1.1, ::1
+2017-12-18T10:35:11.348895881 0.763592s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2017-12-18T10:35:11.348899875 0.763596s notice: Server ready, "UbiLooP_7d6" 01d06439-a219-4f4f-8596-3714e5a507ff
+2017-12-18T10:35:28.183098232 17.597795s info: Table f212c2f3-ab69-4863-9857-11e980f087c5: Starting a new Raft election for term 1.
+2017-12-18T10:35:28.183555695 17.598252s info: Table f212c2f3-ab69-4863-9857-11e980f087c5: Added replica on this server.
+2017-12-18T10:35:28.226880874 17.641578s info: Table f212c2f3-ab69-4863-9857-11e980f087c5: This server is Raft leader for term 1. Latest log index is 0.
+2017-12-18T10:59:49.455741677 1478.870439s notice: Server got SIGINT from pid 0, uid 0; shutting down...
+2017-12-18T10:59:49.455912751 1478.870609s notice: Shutting down client connections...
+2017-12-18T10:59:49.456026709 1478.870723s notice: All client connections closed.
+2017-12-18T10:59:49.456032025 1478.870728s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2017-12-18T10:59:49.501456926 1478.916154s notice: Storage engine shut down.
+2017-12-18T11:32:20.343529623 0.370614s notice: Running rethinkdb 2.3.6~0xenial (GCC 5.3.1)...
+2017-12-18T11:32:20.414978190 0.442067s notice: Running on Linux 4.10.0-38-generic x86_64
+2017-12-18T11:32:20.415080190 0.442165s notice: Loading data from directory /home/infloop/Documents/ETFDoc/REACT.JS.FRONT/rethinkdb_data
+2017-12-18T11:32:21.770752172 1.797837s info: Automatically using cache size of 346 MB
+2017-12-18T11:32:21.772866660 1.799951s notice: Listening for intracluster connections on port 29015
+2017-12-18T11:32:22.062062718 2.089148s notice: Listening for client driver connections on port 28015
+2017-12-18T11:32:22.062594909 2.089680s notice: Listening for administrative HTTP connections on port 8888
+2017-12-18T11:32:22.062599846 2.089684s notice: Listening on cluster addresses: 127.0.0.1, 127.0.1.1, ::1
+2017-12-18T11:32:22.062621271 2.089706s notice: Listening on driver addresses: 127.0.0.1, 127.0.1.1, ::1
+2017-12-18T11:32:22.062625846 2.089710s notice: Listening on http addresses: 127.0.0.1, 127.0.1.1, ::1
+2017-12-18T11:32:22.062628591 2.089713s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2017-12-18T11:32:22.062631367 2.089716s notice: Server ready, "UbiLooP_7d6" 01d06439-a219-4f4f-8596-3714e5a507ff
+2017-12-18T11:32:23.318229190 3.345314s info: Table f212c2f3-ab69-4863-9857-11e980f087c5: Starting a new Raft election for term 2.
+2017-12-18T11:32:23.391201438 3.418286s info: Table f212c2f3-ab69-4863-9857-11e980f087c5: This server is Raft leader for term 2. Latest log index is 3.

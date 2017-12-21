@@ -76,14 +76,13 @@ public class DocumentController {
     public ResponseEntity delete(@RequestParam Long id)
     {
         try{
-            if(documentService.deleteDocument(id)) return ResponseEntity.status(HttpStatus.OK).body("");
-            else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("");
+            return ResponseEntity.status(HttpStatus.OK).body(documentService.deleteDocument(id));
         }catch (ServiceException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getLocalizedMessage());
         }
     }
 
-    /*@RequestMapping(value = "/getByKeywordAndCollaborator", method = RequestMethod.GET)
+    @RequestMapping(value = "/getByKeywordAndCollaborator", method = RequestMethod.GET)
 
     public ResponseEntity getByKeywordAndCollaborator(@RequestParam String keyword, String email){
         try{
@@ -91,13 +90,14 @@ public class DocumentController {
         }catch (ServiceException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getLocalizedMessage());
         }
-    }*/
+    }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public ResponseEntity uplaoad(MultipartHttpServletRequest request, @RequestParam String email){
 
         DocumentVM documentVM = new DocumentVM();
         documentVM.setOwner(email);
+        documentVM.setPrivateFlag(false);
         documentVM.setNative_flag(false);
 
         try{

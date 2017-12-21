@@ -18,28 +18,29 @@ public class Document implements Serializable {
     private String name;
     @ManyToOne(cascade = CascadeType.DETACH, targetEntity = Account.class)
     private  Account owner;
-    private Boolean privateFlag = false;
-    private Boolean native_flag = true;
+    private Boolean privateFlag;
+    private Boolean nativeFlag;
     @DateTimeFormat
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Date date;
 
-    public Boolean getNative_flag() {
-        return native_flag;
+    public Boolean getNativeFlag() {
+        return nativeFlag;
     }
 
-    public void setNative_flag(Boolean native_flag) {
-        this.native_flag = native_flag;
+    public void setNativeFlag(Boolean native_flag) {
+        this.nativeFlag = native_flag;
     }
 
     public Document() {}
 
-    public Document(String name, Account owner, Boolean private_flag) {
+    public Document(String name, Account owner, Boolean private_flag, Boolean native_flag) {
         this.name = name;
         this.owner = owner;
         this.privateFlag = private_flag;
-        this.native_flag = true;
+        this.nativeFlag = native_flag;
     }
+
 
     public Long getId() {
         return id;

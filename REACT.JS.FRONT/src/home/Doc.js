@@ -7,6 +7,8 @@ class Doc extends Component{
 
     constructor(props){
         super(props);
+        
+        console.log(this.props);
         this.state = {
         };
 
@@ -16,7 +18,7 @@ class Doc extends Component{
     deleteDocument() {
       if(window.confirm("Do you want to delete this document?")) {
         axios.delete('http://'+hostname+':8080/document/delete?id='+this.props.doc.id, {
-            id: this.props.doc.i
+            id: this.props.doc.id
         })
         .then(this.handleDeleteSuccess.bind(this))
         .catch(this.handleDeleteError.bind(this));

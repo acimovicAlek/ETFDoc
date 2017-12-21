@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+const protocol = window.location.protocol;
+const hostname = window.location.hostname;
+
 class Form extends Component {
 
     constructor () {
@@ -24,7 +27,7 @@ class Form extends Component {
         let emre = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if(emre.test(this.state.email)) {
              if(this.state.password === this.state.repPassword) {
-                axios.post('http://localhost:8080/account/create', {
+                axios.post(protocol+'//'+hostname+':8080/account/create', {
                     email: this.state.email,
                     firstName: this.state.first_name,
                     lastName: this.state.last_name,

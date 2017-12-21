@@ -40,6 +40,7 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/document/upload/*").permitAll()
                 .antMatchers("/document/upload").permitAll()
                 .antMatchers("/document/download").permitAll()
+                .antMatchers("/document/getByKeywordAndCollaborator").permitAll()
                 .antMatchers(HttpMethod.POST,"/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
