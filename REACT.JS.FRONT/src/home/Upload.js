@@ -14,7 +14,8 @@ class Upload extends Component {
     this.state ={
       email: null,
       file:null,
-      open: false
+      open: false,
+      value: ''
     }
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
@@ -36,6 +37,7 @@ class Upload extends Component {
   }
 
   fileUpload(file){
+
     const url = protocol+'//'+hostname+':8080/document/upload?email='+this.state.email;
     const formData = new FormData();
     formData.append('file',file)
@@ -44,16 +46,64 @@ class Upload extends Component {
     'content-type': 'multipart/form-data'
             }
         }
-    return  post(url, formData,config).then((response)=>{
-      console.log(response.data);
-      this.setState({open:false});
+    let name = file.name;
+    if(name.substr(name.length - 5, 5).toLowerCase() == ".html"){
+      const reader = new FileReader();
+      reader.onload = event => console.log("Started");
+      reader.onerror = error => console.log(error);
+      reader.onloadend = event => this.createFile(name,reader.result);
+      reader.readAsText(file);
+    }else{
+      return  post(url, formData,config).then((response)=>{
+        console.log(response.data);
+        this.setState({open:false});
+      })
+      .catch((error)=>{
+        alert("something went wrong");
+        console.log(error.response);
+      })
+    }
+
+  }
+
+  createFile(name,value) {
+    let documentName = name;
+    this.setState({
+      value
     })
-    .catch((error)=>{
-      alert("something went wrong");
-      console.log(error.response);
-  })
+    axios.post('http://'+hostname+':8080/document/create', {
+      name: documentName,
+      owner: this.state.user,
+      private_flag: 1, // ovo stavlja da je uvijek private, jbg
+      native_flag: 1 // hajmo probat ovo prepraviti da ne postoji više? potrebno shendlati dalje backendu ko god ovo bude radio
+    })
+    .then(this.handleCreateSuccess.bind(this))
+    .catch(this.handleCreateError.bind(this));
+  }
 
+  // Uspješno kreiranje => dodjeljivanje svih mogućih privilegija
+  // ono nije mi baš jasan razlika između write i update na backendu al haj
+  // Uglavnom, potrebno je da API vraća json objekat odakel će se uuzimati document i redirektiati se dalje na njega
+  handleCreateSuccess(response) {
+    axios.post('http://'+hostname+':8080/privileges/create', {
+      account: this.state.user,
+      document: response.data.id,
+      read: true,
+      write: true,
+      delete: true
+    })
+    .then(function(res) {
+        window.location = '/document/' + res.data.document.id+"?value="+this.state.value;
+    }.bind(this))
+    .catch(function(response) {
+      alert("Something went wrong while creating privliges.");
+    }.bind(this));
+  }
 
+  // Hendlanje neuspjelog pokušpaja kreiranja dokumenta
+  handleCreateError(error) {
+    console.log(error.response);
+    alert("Something went wrong while creating the Document.");
   }
 
   onOpenModal = () => {

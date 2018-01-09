@@ -14,8 +14,11 @@ class Markdown extends Component {
 
     constructor () {
         super();
+        var val = '';
+        let urlParams = new URLSearchParams(window.location.search);
+        if(urlParams.has("value")) val = urlParams.get("value");
         this.state = {
-          text: '',
+          text: val,
           id: '',
           name: '',
           user: '',

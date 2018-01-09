@@ -18,3 +18,18 @@
 2017-12-17T00:07:47.440821000 12847.676168s info: Table 920f642e-7955-4566-b1dc-8c928f9add69: Starting a new Raft election for term 1.
 2017-12-17T00:07:47.442539000 12847.677882s info: Table 920f642e-7955-4566-b1dc-8c928f9add69: Added replica on this server.
 2017-12-17T00:07:47.470030000 12847.705373s info: Table 920f642e-7955-4566-b1dc-8c928f9add69: This server is Raft leader for term 1. Latest log index is 0.
+2018-01-09T13:59:08.873389643 0.261788s notice: Recursively removing directory /home/infloop/Documents/ETFDoc/rethinkdb_data/tmp
+2018-01-09T13:59:08.900057776 0.288456s notice: Running rethinkdb 2.3.6~0xenial (GCC 5.3.1)...
+2018-01-09T13:59:08.904811604 0.293213s notice: Running on Linux 4.10.0-38-generic x86_64
+2018-01-09T13:59:08.904909540 0.293308s notice: Loading data from directory /home/infloop/Documents/ETFDoc/rethinkdb_data
+2018-01-09T13:59:09.157500410 0.545898s info: Automatically using cache size of 1762 MB
+2018-01-09T13:59:09.202093449 0.590491s notice: Listening for intracluster connections on port 29015
+2018-01-09T13:59:09.553304064 0.941702s notice: Listening for client driver connections on port 28015
+2018-01-09T13:59:09.553489742 0.941887s notice: Listening for administrative HTTP connections on port 8888
+2018-01-09T13:59:09.553538421 0.941936s notice: Listening on cluster addresses: 127.0.0.1, 127.0.1.1, ::1
+2018-01-09T13:59:09.553541586 0.941939s notice: Listening on driver addresses: 127.0.0.1, 127.0.1.1, ::1
+2018-01-09T13:59:09.553543477 0.941941s notice: Listening on http addresses: 127.0.0.1, 127.0.1.1, ::1
+2018-01-09T13:59:09.553546038 0.941944s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2018-01-09T13:59:09.553553380 0.941951s notice: Server ready, "Mirzas_MacBook_Air_local_vo2" ea294486-1ab9-4916-ab1b-b4bada23143d
+2018-01-09T13:59:11.214851156 2.603249s info: Table 920f642e-7955-4566-b1dc-8c928f9add69: Starting a new Raft election for term 2.
+2018-01-09T13:59:11.356712031 2.745110s info: Table 920f642e-7955-4566-b1dc-8c928f9add69: This server is Raft leader for term 2. Latest log index is 3.
