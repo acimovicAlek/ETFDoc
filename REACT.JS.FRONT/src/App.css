@@ -232,3 +232,32 @@ section#footer {
   font-size: 16px;
   border: 0;
 }
+
+
+.Modal {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    height: auto;
+    background-color: white!important;
+    margin: 300px;
+    margin-top: 40px!important;
+    margin-bottom: 40px!important;
+  }
+
+  .Overlay {
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.75);
+  }
+
+  .modal-content{
+    height: 1000px;
+    padding: 30px;
+  }

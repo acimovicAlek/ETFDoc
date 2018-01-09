@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import openSocket from 'socket.io-client';
 import jwtDecode from 'jwt-decode';
-
+import renderHTML from 'react-render-html';
+import ReactModal from 'react-modal';
 const protocol = window.location.protocol;
 const hostname = window.location.hostname;
 
-const socket = openSocket(protocol+'//'+hostname+':6400');  
+const socket = openSocket(protocol+'//'+hostname+':6400');
 
 var myCodeMirror;
 
@@ -21,6 +22,7 @@ class Markdown extends Component {
           user: '',
           active: {},
           recieved: false,
+          showModal:false,
           privs: false,
             priv_read : false,
             priv_write : false,
@@ -36,7 +38,8 @@ class Markdown extends Component {
         this.onCheckboxChange = this.onCheckboxChange.bind(this);
         this.grantPrivlieges = this.grantPrivlieges.bind(this);
         this.grantPrivilegesAction = this.grantPrivilegesAction.bind(this);
-
+        this.handleOpenModal = this.handleOpenModal.bind(this);
+        this.handleCloseModal = this.handleCloseModal.bind(this);
         socket.on("document",(res) => {
           console.log(res);
           if(res.new_val.document === this.state.document && Number(res.new_val.user) != this.state.user){
@@ -46,7 +49,7 @@ class Markdown extends Component {
               text : res.new_val.content,
               name : res.new_val.name
             })
-            this.setCursor(pos+dif); 
+            this.setCursor(pos+dif);
           }
         });
     }
@@ -71,11 +74,11 @@ class Markdown extends Component {
             // Fetch the data
             axios.get('http://'+hostname+':6400/document/'+document+'/'+this.state.user, {})
             .then(this.handleSuccess.bind(this))
-            .catch(this.handleError.bind(this)); 
-        }.bind(this))   
+            .catch(this.handleError.bind(this));
+        }.bind(this))
         .catch(function(error) {
             console.log(error.response);
-        }.bind(this));  
+        }.bind(this));
     }
 
     getCursor(){
@@ -111,6 +114,14 @@ class Markdown extends Component {
       console.log(error.response);
     }
 
+    handleOpenModal () {
+    this.setState({ showModal: true });
+  }
+
+  handleCloseModal () {
+    this.setState({ showModal: false });
+  }
+
     onNameChange(e) {
         this.setState({[e.target.name]:e.target.value});
         var obj = {
@@ -120,7 +131,7 @@ class Markdown extends Component {
           user: this.state.user,
           recieved: false
         };
-        socket.emit('document-update', obj);  
+        socket.emit('document-update', obj);
     }
 
     onTextChange(e) {
@@ -134,10 +145,10 @@ class Markdown extends Component {
           recieved: false
       };
 
-      socket.emit('document-update', obj);  
+      socket.emit('document-update', obj);
     }
 
-    // Delete file 
+    // Delete file
     deleteDocument() {
       if(window.confirm("Do you want to delete this document?")) {
         axios.delete('http://'+hostname+':8080/document/delete/'+this.state.document, {})
@@ -204,7 +215,7 @@ class Markdown extends Component {
       let privname = "priv_" + name;
 
       this.setState({ [privname]: change });
-    
+
       console.log(this.state);
     }
 
@@ -222,8 +233,24 @@ class Markdown extends Component {
                       <ul>
                       </ul>
                     </div>
+
                     <textarea id="editor" ref="editor" className="ql-editor" name="text" value={this.state.text} onChangeCapture={this.onTextChange}></textarea>
+
+
+                    <ReactModal
+                      isOpen={this.state.showModal}
+                      onRequestClose={this.handleCloseModal}
+                      shouldCloseOnOverlayClick={true}
+                      className="Modal"
+                      overlayClassName="Overlay"
+                      contentLabel="Preview document"
+                    >
+                      <div className="modal-content">
+                      {renderHTML(this.state.text)}
+                      </div>
+                    </ReactModal>
                   </div>
+
                   <div className="col-md-4 col-sm-12 col-xs-12">
                     <div className="panel panel-default">
                       <div className="panel-footer">Postavke</div>
@@ -239,7 +266,7 @@ class Markdown extends Component {
                             <label className="checkbox-inline"><input type="checkbox" name="delete" onChange={(e) => this.onCheckboxChange(this.state.priv_delete, "delete", e)} />Delete</label>
 
                             <input type="submit" name="submit" value="Add collaborator" className="btn btn-primary" style={{width: "100%", padding: "15px 0", marginTop: "15px"}} onClick={this.grantPrivlieges}/>
-                          </form> 
+                          </form>
 
                           <hr />
                           {
@@ -251,10 +278,13 @@ class Markdown extends Component {
                                 <button className="btn btn-danger" style={{width: "100%", padding: "15px 0", marginTop: "15px"}} onClick={this.deleteDocument}>
                                   Delete document
                                 </button>
+
                               </div>
                             )
                           }
-                          
+                          <button className="btn btn-success" style={{width: "100%", padding: "15px 0", marginTop: "15px"}} onClick={this.handleOpenModal}>
+                            Preview document
+                          </button>
                         </div>
                       </div>
                     </div>
