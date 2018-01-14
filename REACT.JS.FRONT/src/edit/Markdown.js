@@ -4,9 +4,10 @@ import openSocket from 'socket.io-client';
 import jwtDecode from 'jwt-decode';
 
 const protocol = window.location.protocol;
-const hostname = window.location.hostname;
+const hostname = "35.158.215.54";
+const springbase = "http://8cc11183.ngrok.io/";
 
-const socket = openSocket(protocol+'//'+hostname+':6400');  
+const socket = openSocket(protocol+'//'+hostname+'');  
 
 var myCodeMirror;
 
@@ -64,12 +65,12 @@ class Markdown extends Component {
 
         let data = null;
 
-        axios.get('http://'+hostname+':8080/account/getbyemail?email='+email, { })
+        axios.get(springbase+'/account/getbyemail?email='+email, { })
         .then(function(res) {
             this.setState({user: res.data.id});
 
             // Fetch the data
-            axios.get('http://'+hostname+':6400/document/'+document+'/'+this.state.user, {})
+            axios.get('http://'+hostname+'/document/'+document+'/'+this.state.user, {})
             .then(this.handleSuccess.bind(this))
             .catch(this.handleError.bind(this)); 
         }.bind(this))   
@@ -140,7 +141,7 @@ class Markdown extends Component {
     // Delete file 
     deleteDocument() {
       if(window.confirm("Do you want to delete this document?")) {
-        axios.delete('http://'+hostname+':8080/document/delete/'+this.state.document, {})
+        axios.delete(springbase+'/document/delete/'+this.state.document, {})
         .then(this.handleDeleteSuccess.bind(this))
         .catch(this.handleDeleteError.bind(this));
       }
@@ -158,13 +159,13 @@ class Markdown extends Component {
     grantPrivlieges(e) {
       e.preventDefault();
 
-      if(this.state.email != "") {
+      if(this.state.priv_email === "") {
         alert("Please enter an e-mail address.");
         return false;
       }
 
       // Check if the user exists in the database
-      axios.get('http://'+hostname+':8080/account/getbyemail?email='+this.state.priv_email, { })
+      axios.get(springbase+'/account/getbyemail?email='+this.state.priv_email, { })
         .then(function(res) {
           this.setState({priv_id: res.data.id});
           this.grantPrivilegesAction();
@@ -176,7 +177,7 @@ class Markdown extends Component {
 
     // Real action adding privileges
     grantPrivilegesAction() {
-      axios.post('http://'+hostname+':8080/privileges/create', {
+      axios.post(springbase+'/privileges/create', {
         account: this.state.priv_id,
         document: this.state.id,
         read: this.state.priv_read,
@@ -192,9 +193,9 @@ class Markdown extends Component {
     }
 
     onPrivEmailChange(e) {
-      this.setState({ priv: {
-        email: e.target.value
-      }});
+      this.setState({
+        priv_email: e.target.value
+      });
     }
 
     onCheckboxChange(state, name, e) {

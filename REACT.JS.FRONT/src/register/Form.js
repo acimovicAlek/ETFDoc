@@ -4,6 +4,8 @@ import axios from 'axios';
 const protocol = window.location.protocol;
 const hostname = window.location.hostname;
 
+const springbase = "http://8cc11183.ngrok.io/";
+
 class Form extends Component {
 
     constructor () {
@@ -27,7 +29,7 @@ class Form extends Component {
         let emre = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if(emre.test(this.state.email)) {
              if(this.state.password === this.state.repPassword) {
-                axios.post(protocol+'//'+hostname+':8080/account/create', {
+                axios.post(springbase+'/account/create', {
                     email: this.state.email,
                     firstName: this.state.first_name,
                     lastName: this.state.last_name,

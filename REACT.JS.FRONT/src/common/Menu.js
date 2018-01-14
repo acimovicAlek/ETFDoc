@@ -6,7 +6,7 @@ class Menu extends Component {
         if(sessionStorage.getItem('token') !== null) 
         {
             return (
-                <nav id="mainNav" className="navbar">
+                <nav id="mainNav" className="navbar hidden-xs">
                     <div className="container-fluid">
                         <div className="navbar-header">
                             <a className="navbar-brand mainNav-heading" href="/">ETF<blue>Docs</blue></a>
@@ -23,7 +23,7 @@ class Menu extends Component {
         else
         {
             return (
-                <nav id="mainNav" className="navbar">
+                <nav id="mainNav" className="navbar hidden-xs">
                     <div className="container-fluid">
                         <div className="navbar-header">
                             <a className="navbar-brand mainNav-heading" href="/">ETF<blue>Docs</blue></a>

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 
 const hostname = window.location.hostname;
+const springbase = "http://8cc11183.ngrok.io/";
 
 class Doc extends Component{
 
@@ -17,7 +18,7 @@ class Doc extends Component{
 
     deleteDocument() {
       if(window.confirm("Do you want to delete this document?")) {
-        axios.delete('http://'+hostname+':8080/document/delete?id='+this.props.doc.id, {
+        axios.delete(springbase+'/document/delete?id='+this.props.doc.id, {
             id: this.props.doc.id
         })
         .then(this.handleDeleteSuccess.bind(this))

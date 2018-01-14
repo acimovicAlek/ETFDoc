@@ -6,6 +6,8 @@ import Doc from './Doc';
 const protocol = window.location.protocol;
 const hostname = window.location.hostname;
 
+const springbase = "http://8cc11183.ngrok.io/";
+
 class DocumentPanel extends Component {
 
     constructor (props) {
@@ -34,12 +36,12 @@ class DocumentPanel extends Component {
 
       console.log(this.props.publicFiles);
       if (this.props.publicFiles==1){
-        axios.get(protocol+'//'+hostname+':8080/document/public', { })
+        axios.get(springbase+'/document/public', { })
         .then(this.handleSuccess.bind(this))
         .catch(this.handleError.bind(this));
       }
       else if (this.props.publicFiles==0) {
-          axios.get(protocol+'//'+hostname+':8080/document/private?email='+email, {})
+          axios.get(springbase+'/document/private?email='+email, {})
           .then(this.handleSuccess.bind(this))
           .catch(this.handleError.bind(this));
       }
@@ -65,7 +67,7 @@ class DocumentPanel extends Component {
       // Setup the keyword
       this.setState({ keyword: e.target.value });
 
-      axios.get('http://localhost:8080/document/getByKeywordAndCollaborator?email=' + this.state.email + '&keyword=' + e.target.value, { })
+      axios.get(springbase+'/document/getByKeywordAndCollaborator?email=' + this.state.email + '&keyword=' + e.target.value, { })
       .then(this.handleSearchSuccess.bind(this))
       .catch(this.handleSearchError.bind(this));
     }

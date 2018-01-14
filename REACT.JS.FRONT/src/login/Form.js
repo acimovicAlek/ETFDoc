@@ -5,6 +5,8 @@ import jwtDecode from 'jwt-decode';
 const protocol = window.location.protocol;
 const hostname = window.location.hostname;
 
+const springbase = "http://8cc11183.ngrok.io/";
+
 class Form extends Component {
      // State constructor
     constructor () {
@@ -24,7 +26,7 @@ class Form extends Component {
 
         if(this.state.email && this.state.password) {
             if(this.state.email && this.state.password) {
-                axios.post(protocol+'//'+hostname+':8080/login', {
+                axios.post(springbase+'/login', {
                     email: this.state.email,
                     password: this.state.password
                 })
@@ -43,7 +45,7 @@ class Form extends Component {
 
         let data = null;
 
-        axios.get(protocol+'//'+hostname+':8080/account/getbyemail?email='+email, { })
+        axios.get(springbase+'/account/getbyemail?email='+email, { })
         .then(function(res) {
             console.log(res.data.id);
             sessionStorage.setItem('id', res.data.id);

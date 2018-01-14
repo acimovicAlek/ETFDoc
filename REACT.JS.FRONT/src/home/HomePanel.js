@@ -4,8 +4,11 @@ import jwtDecode from 'jwt-decode';
 
 import DocumentPanel from './DocumentPanel';
 import Upload from './Upload';
+
 const protocol = window.location.protocol;
 const hostname = window.location.hostname;
+
+const springbase = "http://8cc11183.ngrok.io/";
 
 class HomePanel extends Component {
 
@@ -29,7 +32,7 @@ class HomePanel extends Component {
 
       let data = null;
 
-      axios.get('http://'+hostname+':8080/account/getbyemail?email='+email, { })
+      axios.get(springbase+'/account/getbyemail?email='+email, { })
       .then(function(res) {
           this.setState({user: res.data.id});
       }.bind(this))
@@ -64,7 +67,7 @@ class HomePanel extends Component {
     createFile() {
       let documentName = prompt("Setup the document name");
 
-      axios.post('http://'+hostname+':8080/document/create', {
+      axios.post(springbase+'/document/create', {
         name: documentName,
         owner: this.state.user,
         private_flag: 1, // ovo stavlja da je uvijek private, jbg
@@ -78,7 +81,7 @@ class HomePanel extends Component {
     // ono nije mi baš jasan razlika između write i update na backendu al haj
     // Uglavnom, potrebno je da API vraća json objekat odakel će se uuzimati document i redirektiati se dalje na njega
     handleCreateSuccess(response) {
-      axios.post('http://'+hostname+':8080/privileges/create', {
+      axios.post(springbase+'/privileges/create', {
         account: this.state.user,
         document: response.data.id,
         read: true,
@@ -104,13 +107,11 @@ class HomePanel extends Component {
 
     render () {
         return (
-            <section id="cover" className="cover-fix">
-
+            <section style={{textAlign: 'center'}}>
                     <div className="container container-home">
-
                         <div className="plain-panel">
                         <div className="row home-row">
-                        <div className="col-md-2 col-sm-3 col-xs-5 home-col">
+                        <div className="col-md-2 col-sm-4 col-xs-12 home-col">
                         <div className="nav-side-menu">
                           <div className="add-file-wrapper">
                             <button className="btn btn-primary add-file-btn" onClick={this.createFile}>
@@ -138,7 +139,7 @@ class HomePanel extends Component {
 
                          </div>
                         </div>
-                        <div className="col-md-10 col-sm-9 col-xs-7 home-col">
+                        <div className="col-md-10 col-sm-8 col-xs-12 home-col">
                           <h1 className="title">{this.state.title}</h1>
                           {
                             this.state.public
@@ -156,7 +157,7 @@ class HomePanel extends Component {
 
                     </div>
 
-                }
+                
             </section>
         );
     }
